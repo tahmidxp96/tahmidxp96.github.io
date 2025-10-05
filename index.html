@@ -1,87 +1,225 @@
-body {
-    font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #e0f2f7, #c1e4f3); /* Soft blue gradient background */
-    background-size: 200% 200%;
-    animation: gradientAnimation 10s ease infinite alternate; /* Subtle animation for liquid feel */
-    color: #334155; /* Darker text for contrast */
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Md. Tahmid Hassan Khan | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+     <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+        .mode-button.active {
+            background-color: #4A90E2;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
 
-@keyframes gradientAnimation {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
-}
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Md. Tahmid Hassan Khan</h1>
+            <p class="text-xl md:text-2xl text-gray-600 mt-2">Agricultural Engineer</p>
+        </header>
 
-.container {
-    max-width: 1200px;
-}
+        <nav class="flex justify-center mb-8">
+            <button id="corporate-btn" class="mode-button active text-white bg-gray-800 hover:bg-gray-700 font-bold py-2 px-4 rounded-l-full">
+                Corporate
+            </button>
+            <button id="academics-btn" class="mode-button text-white bg-gray-600 hover:bg-gray-700 font-bold py-2 px-4 rounded-r-full">
+                Academics
+            </button>
+        </nav>
 
-header h1 {
-    color: #1a202c; /* Darker primary color */
-    text-shadow: 0px 2px 4px rgba(0,0,0,0.1); /* Subtle text shadow */
-}
+        <main>
+            <!-- Corporate Section -->
+            <section id="corporate" class="section active">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="md:col-span-1">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <h2 class="text-2xl font-bold mb-4">Contact</h2>
+                            <p><i class="fas fa-envelope mr-2"></i>tahmidxp96@gmail.com</p>
+                            <p><i class="fas fa-envelope mr-2"></i>md._tahmid_hassan_khan@bat.com</p>
+                            <p><i class="fas fa-phone mr-2"></i>+880 1701-019018 (Personal)</p>
+                            <p><i class="fas fa-phone mr-2"></i>+880 1894-724754 (Office)</p>
+                            <p><i class="fas fa-map-marker-alt mr-2"></i>Dighinala, Khagrachari, Chittagong.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Skills</h2>
+                            <ul>
+                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>MS Suite</li>
+                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Adobe Creative Cloud</li>
+                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Fusion 360 and Cinema 4D</li>
+                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>C, C++, R, Python</li>
+                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Machine Learning</li>
+                            </ul>
+                        </div>
+                         <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Awards</h2>
+                            <p>Secured place in the TOP THREE ideas of SAIYN Idea Competition-2023 on "Harnessing Smart Innovation for Shaping the Future Agriculture."</p>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <h2 class="text-2xl font-bold mb-4">About Me</h2>
+                            <p>An agricultural engineer specializing in automation and mechanization. Expert in precision farming, sensor technologies, and data-driven decision-making. Currently focused on developing IoT-based systems and innovative agricultural machinery, passionate about leveraging technology to enhance agricultural efficiency and sustainability.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Work Experience</h2>
+                            <div>
+                                <h3 class="text-xl font-semibold">Leaf Quality Officer, British American Tobacco Bangladesh</h3>
+                                <p class="text-gray-600">Aug 2024 - Present</p>
+                            </div>
+                            <div class="mt-4">
+                                <h3 class="text-xl font-semibold">Research Fellow, Bangladesh Institute of Nuclear Agriculture</h3>
+                                <p class="text-gray-600">Oct 2021 - Jul 2024</p>
+                            </div>
+                            <div class="mt-4">
+                                <h3 class="text-xl font-semibold">Part-time Marketing and Graphics Designer, GAgro LTD</h3>
+                                <p class="text-gray-600">March 2020 - Jan 2021</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Training</h2>
+                             <ul class="list-disc list-inside">
+                                <li>Industrial Training Attachment</li>
+                                <li>Rice Transplanter & Combine Harvester- Operation, Repair & Maintenance</li>
+                                <li>Extension Field Trip Attachment</li>
+                                <li>Global Postharvest Loss Prevention: Fundamentals, Technologies, and Actors</li>
+                                <li>National Youth Assembly -NYA</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Extracurricular Activities</h2>
+                            <ul class="list-disc list-inside">
+                                <li>Additional General Secretary, Bangladesh Agricultural University Career Club</li>
+                                <li>Committee Member, Volunteer for Bangladesh</li>
+                                <li>Active Citizens, British Council</li>
+                                <li>Volunteer, Bangladesh Biology Olympiad</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-header p {
-    color: #4a5568;
-}
+            <!-- Academics Section -->
+            <section id="academics" class="section">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="md:col-span-1">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                             <h2 class="text-2xl font-bold mb-4">Contact</h2>
+                            <p><i class="fas fa-envelope mr-2"></i>tahmid.1705084@bau.edu.bd</p>
+                            <p><i class="fas fa-envelope mr-2"></i>tahmidxp96@gmail.com</p>
+                            <p><i class="fas fa-phone mr-2"></i>+880 1894-724754</p>
+                            <a href="https://www.linkedin.com/in/tahmid-hassan-khan" class="text-blue-500 hover:underline"><i class="fab fa-linkedin mr-2"></i>LinkedIn</a>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Education</h2>
+                            <p class="font-semibold">Bachelor of Science in Agricultural Engineering</p>
+                            <p>Bangladesh Agricultural University (BAU), Mymensingh, Bangladesh.</p>
+                            <p class="text-gray-600">Jan 2017 - Aug 2024</p>
+                            <p><strong>CGPA:</strong> 2.68/4.00</p>
+                            <p><strong>Major:</strong> Farm Power and Machinery</p>
+                            <p><strong>Thesis:</strong> Design and Development of a Microcontroller-Based Automated Irrigation for Rice Field</p>
+                        </div>
+                         <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Technical Skills</h2>
+                            <ul>
+                                <li><strong>Programming:</strong> Python, C/C++, R, LaTeX</li>
+                                <li><strong>Data Analysis:</strong> Microsoft Excel, GraphPad Prism</li>
+                                <li><strong>IoT & Embedded:</strong> Arduino IDE, Blynk</li>
+                                <li><strong>Design & Simulation:</strong> Fusion 360</li>
+                                <li><strong>Designing Tools:</strong> Adobe Creative Suite, Cinema4D</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <h2 class="text-2xl font-bold mb-4">Summary</h2>
+                            <ul class="list-disc list-inside">
+                                <li>Currently working as a Leaf Quality Officer at BAT Bangladesh, applying data-driven quality control practices and working closely with agri supply chains.</li>
+                                <li>Developed and field tested an automated irrigation system using ESP and ESP-NOW to optimize water usage in rice cultivation.</li>
+                                <li>Research interests include precision agriculture, climate-smart mechanization, IoT in agriculture, and embedded systems for field applications.</li>
+                                <li>Published 2 research papers Another one WIP on real-time irrigation control using wireless sensors.</li>
+                                <li>Looking for MS/PhD opportunities to advance innovations in smart agriculture, automation, and resource-efficient agriculture.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Research and Work Experiences</h2>
+                            <div class="mb-4">
+                                <h3 class="text-xl font-semibold">Leaf Quality Officer, British American Tobacco Bangladesh LTD</h3>
+                                <p class="text-gray-600">August 2024 - Present</p>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>Collected and analyzed field and lab samples per crop cycle to assess moisture levels, leaf quality, and contamination.</li>
+                                    <li>Monitored and evaluated field performance data at various crop stages.</li>
+                                    <li>Conducted daily inspections of harvested tobacco to validate grading accuracy.</li>
+                                    <li>Organized and led training sessions for farmers, field technicians, and seasonal staff.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold">Research Fellow, Bangladesh Institute of Nuclear Agriculture</h3>
+                                <p class="text-gray-600">October 2021 - July 2024</p>
+                                <p class="font-medium mt-2">Solar-Powered Automated Irrigation System for Rice Fields</p>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>Designed and deployed an automated irrigation system using ESP8266/ESP32 microcontrollers.</li>
+                                    <li>Programmed microcontrollers using Arduino IDE (C language).</li>
+                                    <li>Integrated a solar-powered power unit and an automatic data logger.</li>
+                                    <li>Utilized Blynk IoT platform for real-time remote monitoring.</li>
+                                    <li>Installed and field-tested the system in a rice paddy.</li>
+                                </ul>
+                            </div>
+                        </div>
+                         <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Publications and Conferences</h2>
+                             <ul class="list-disc list-inside">
+                               <li>Hassan, R., et al. (2020). Prediction of Epidemics Trend of COVID-19 in Bangladesh. <em>Frontiers in Public Health</em>.</li>
+                               <li>Hasan, M. A., et al. (2024). Technical evaluation of low-head drip irrigation system. <em>Global Research in Environment and Sustainability</em>.</li>
+                               <li>Khan, M. T. H., et al. (2025, February). Automated irrigation for rice fields. <em>1st International Conference on Agricultural Machinery and Bioresource Engineering (ICAMBE)</em>.</li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
 
-/* Glass card effect */
-.bg-white {
-    background-color: rgba(255, 255, 255, 0.6); /* Semi-transparent white */
-    backdrop-filter: blur(10px) saturate(180%); /* Frosted glass effect */
-    -webkit-backdrop-filter: blur(10px) saturate(180%); /* For Safari */
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
-    border-radius: 16px; /* More rounded corners */
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1); /* Softer shadow */
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth hover */
-}
+    <script>
+        const corporateBtn = document.getElementById('corporate-btn');
+        const academicsBtn = document.getElementById('academics-btn');
+        const corporateSection = document.getElementById('corporate');
+        const academicsSection = document.getElementById('academics');
 
-.bg-white:hover {
-    transform: translateY(-5px); /* Lift on hover */
-    box-shadow: 0 12px 48px 0 rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
-}
+        corporateBtn.addEventListener('click', () => {
+            corporateSection.classList.add('active');
+            academicsSection.classList.remove('active');
+            corporateBtn.classList.add('active', 'bg-gray-800');
+            corporateBtn.classList.remove('bg-gray-600');
+            academicsBtn.classList.remove('active', 'bg-gray-800');
+            academicsBtn.classList.add('bg-gray-600');
+        });
 
-/* Navigation Buttons */
-.mode-button {
-    background-color: rgba(255, 255, 255, 0.2); /* Lighter, more transparent base */
-    color: #334155; /* Darker text for inactive */
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    transition: all 0.3s ease;
-}
+        academicsBtn.addEventListener('click', () => {
+            academicsSection.classList.add('active');
+            corporateSection.classList.remove('active');
+            academicsBtn.classList.add('active', 'bg-gray-800');
+            academicsBtn.classList.remove('bg-gray-600');
+            corporateBtn.classList.remove('active', 'bg-gray-800');
+            corporateBtn.classList.add('bg-gray-600');
+        });
+    </script>
 
-.mode-button.active {
-    background-color: rgba(74, 144, 226, 0.8); /* Stronger blue for active */
-    color: white;
-    border-color: rgba(74, 144, 226, 0.5);
-    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
-}
-
-.mode-button:hover:not(.active) {
-    background-color: rgba(255, 255, 255, 0.4); /* Slightly more opaque on hover */
-    color: #1a202c;
-}
-
-/* Text inside cards */
-h2 {
-    color: #1a202c;
-    font-weight: 700;
-}
-
-h3 {
-    color: #2d3748;
-    font-weight: 600;
-}
-
-p, li {
-    color: #4a5568;
-}
-
-/* Icons */
-.fa-check-circle {
-    color: #4CAF50; /* Green for check marks */
-}
-
-.fas, .fab {
-    color: #4A90E2; /* Blue for general icons */
-}
+</body>
+</html>
