@@ -8,18 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css"> <!-- Link to your external CSS -->
-    <script src="script.js"></script> <!-- Link to your external JavaScript -->
+    <script src="script.js" defer></script> <!-- Link to your external JavaScript, added 'defer' -->
+<link type="text/css" rel="stylesheet" href="css/style.css"/>
 </head>
 <body class="light-mode">
 
-    <!-- Dynamic Moving Icons (Floating elements) -->
-    <div class="dynamic-icon icon-1"><i class="fas fa-seedling"></i></div>
-    <div class="dynamic-icon icon-2"><i class="fas fa-leaf"></i></div>
-    <div class="dynamic-icon icon-3"><i class="fas fa-tractor"></i></div>
-    <div class="dynamic-icon icon-4"><i class="fas fa-solar-panel"></i></div>
-    <div class="dynamic-icon icon-5"><i class="fas fa-cloud"></i></div>
-    <div class="dynamic-icon icon-6"><i class="fas fa-wifi"></i></div>
-
+    <!-- Container for Dynamic Moving Icons -->
+    <div id="dynamic-icons-container" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
 
     <div class="container mx-auto p-4 md:p-8 relative z-10"> <!-- Added relative and z-index -->
         <header class="text-center mb-8">
@@ -195,7 +190,6 @@
         </main>
     </div>
 
-    <script src="script.js"></script> <!-- Link to your external JavaScript -->
-
+<script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>
