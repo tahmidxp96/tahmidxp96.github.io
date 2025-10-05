@@ -3,193 +3,358 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Md. Tahmid Hassan Khan | Portfolio</title>
+    <title>Md. Tahmid Hassan Khan | Interactive Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> <!-- Link to your external CSS -->
-    <script src="script.js" defer></script> <!-- Link to your external JavaScript, added 'defer' -->
-<link type="text/css" rel="stylesheet" href="css/style.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --corp-bg-start: #6DD5FA; --corp-bg-end: #2980B9;
+            --acad-bg-start: #FFDAB9; --acad-bg-end: #E6A4B4;
+            --corp-text: #111827; --acad-text: #5D4037;
+        }
+
+        /* --- Glassmorphism & Themes --- */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(45deg, var(--corp-bg-start), var(--corp-bg-end));
+            color: var(--corp-text);
+            background-size: 200% 200%;
+            animation: gradient-animation 15s ease infinite;
+        }
+        body.academic-theme {
+            font-family: 'Lora', serif;
+            background: linear-gradient(45deg, var(--acad-bg-start), var(--acad-bg-end));
+            background-size: 200% 200%;
+            animation: gradient-animation 15s ease infinite;
+            color: var(--acad-text);
+        }
+        
+        /* --- Animations --- */
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes draw { to { stroke-dashoffset: 0; } }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
+        .homepage-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity 1s ease-in-out; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- 3D Hover & Parallax --- */
+        .interactive-card { transition: transform 0.1s linear; transform-style: preserve-3d; }
+        .parallax-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.5; }
+
+        /* --- Accordion --- */
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out, padding 0.5s ease-out; }
+        .accordion-item.active .accordion-content { max-height: 500px; padding-top: 1rem; padding-bottom: 1rem; }
+        .accordion-item.active .accordion-icon { transform: rotate(45deg); }
+
+        /* --- Slider & Menu --- */
+        .slider-container { overflow: hidden; }
+        .slider-track { display: flex; transition: transform 0.5s ease-in-out; }
+        .slider-item { min-width: 100%; box-sizing: border-box; }
+        #mobile-menu { transform: translateX(100%); transition: transform 0.3s ease-in-out; }
+        #mobile-menu.open { transform: translateX(0); }
+
+        /* --- Utility --- */
+        #portfolio-page, .section { display: none; }
+        .section.active { display: block; }
+    </style>
 </head>
-<body class="light-mode">
+<body class="antialiased">
 
-    <!-- Container for Dynamic Moving Icons -->
-    <div id="dynamic-icons-container" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+    <!-- Homepage -->
+    <div id="homepage" class="relative w-screen h-screen overflow-hidden flex flex-col justify-center items-center text-white transition-colors duration-1000" style="background-color: #0c3c26;">
+        <div id="acad-background" class="homepage-bg opacity-100">
+             <svg width="100%" height="100%" class="absolute top-0 left-0"><defs><pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M 80 0 L 0 0 0 80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#grid)" /><g stroke="rgba(255,255,255,0.2)" stroke-width="2" fill="none"><path d="M -400 100 Q -200 150 0 100 T 400 150 T 800 100 T 1200 150 T 1600 100 T 2000 150" stroke-dasharray="2000" stroke-dashoffset="2000" style="animation: draw 20s linear infinite;"></path><path d="M -400 200 Q -200 250 0 200 T 400 250 T 800 200 T 1200 250 T 1600 200 T 2000 250" stroke-dasharray="2000" stroke-dashoffset="2000" style="animation: draw 25s linear infinite; animation-delay: -5s;"></path></g></svg>
+        </div>
+        <div id="corp-background" class="homepage-bg opacity-0" style="background-color: #1f2937;">
+             <svg width="100%" height="100%" class="absolute top-0 left-0"><g fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="8"><circle cx="20vw" cy="30vh" r="100" stroke-dasharray="20 15" style="animation: rotate 20s linear infinite; transform-origin: 20vw 30vh;"></circle><circle cx="50vw" cy="65vh" r="150" stroke-dasharray="30 20" style="animation: rotate 30s linear infinite reverse; transform-origin: 50vw 65vh;"></circle></g></svg>
+        </div>
 
-    <div class="container mx-auto p-4 md:p-8 relative z-10"> <!-- Added relative and z-index -->
-        <header class="text-center mb-8">
-            <h1 class="main-heading text-4xl md:text-5xl font-bold">
-                Md. Tahmid Hassan Khan
-            </h1>
-            <p class="text-xl md:text-2xl mt-2">Agricultural Engineer</p>
-        </header>
-
-        <!-- Day/Night Toggle Switch -->
-        <button id="theme-toggle" class="theme-toggle-btn fixed right-4 top-4 p-3 rounded-full shadow-lg z-50">
-            <i class="fas fa-moon text-xl"></i>
-        </button>
-
-        <nav class="flex justify-center mb-8">
-            <button id="corporate-btn" class="mode-button active font-bold py-2 px-4 rounded-l-full">
-                Corporate
-            </button>
-            <button id="academics-btn" class="mode-button font-bold py-2 px-4 rounded-r-full">
-                Academics
-            </button>
-        </nav>
-
-        <main>
-            <!-- Corporate Section -->
-            <section id="corporate" class="section active">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="md:col-span-1">
-                        <div class="glass-card p-6 rounded-lg shadow-lg">
-                            <h2 class="text-2xl font-bold mb-4">Contact</h2>
-                            <p><i class="fas fa-envelope mr-2"></i>tahmidxp96@gmail.com</p>
-                            <p><i class="fas fa-envelope mr-2"></i>md._tahmid_hassan_khan@bat.com</p>
-                            <p><i class="fas fa-phone mr-2"></i>+880 1701-019018 (Personal)</p>
-                            <p><i class="fas fa-phone mr-2"></i>+880 1894-724754 (Office)</p>
-                            <p><i class="fas fa-map-marker-alt mr-2"></i>Dighinala, Khagrachari, Chittagong.</p>
-                        </div>
-                        <div class="glass-card p-6 rounded-lg shadow-lg mt-8">
-                            <h2 class="text-2xl font-bold mb-4">Skills</h2>
-                            <ul>
-                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>MS Suite</li>
-                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Adobe Creative Cloud</li>
-                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Fusion 360 and Cinema 4D</li>
-                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>C, C++, R, Python</li>
-                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Machine Learning</li>
-                            </ul>
-                        </div>
-                         <div class="glass-card p-6 rounded-lg shadow-lg mt-8">
-                            <h2 class="text-2xl font-bold mb-4">Awards</h2>
-                            <p>Secured place in the TOP THREE ideas of SAIYN Idea Competition-2023 on "Harnessing Smart Innovation for Shaping the Future Agriculture."</p>
-                        </div>
-                    </div>
-                    <div class="md:col-span-2">
-                        <div class="glass-card p-6 rounded-lg shadow-lg">
-                            <h2 class="text-2xl font-bold mb-4">About Me</h2>
-                            <p>An agricultural engineer specializing in automation and mechanization. Expert in precision farming, sensor technologies, and data-driven decision-making. Currently focused on developing IoT-based systems and innovative agricultural machinery, passionate about leveraging technology to enhance agricultural efficiency and sustainability.</p>
-                        </div>
-                        <div class="glass-card p-6 rounded-lg shadow-lg mt-8">
-                            <h2 class="text-2xl font-bold mb-4">Work Experience</h2>
-                            <div>
-                                <h3 class="text-xl font-semibold">Leaf Quality Officer, British American Tobacco Bangladesh</h3>
-                                <p class="text-gray-600">Aug 2024 - Present</p>
-                            </div>
-                            <div class="mt-4">
-                                <h3 class="text-xl font-semibold">Research Fellow, Bangladesh Institute of Nuclear Agriculture</h3>
-                                <p class="text-gray-600">Oct 2021 - Jul 2024</p>
-                            </div>
-                            <div class="mt-4">
-                                <h3 class="text-xl font-semibold">Part-time Marketing and Graphics Designer, GAgro LTD</h3>
-                                <p class="text-gray-600">March 2020 - Jan 2021</p>
-                            </div>
-                        </div>
-                        <div class="glass-card p-6 rounded-lg shadow-lg mt-8">
-                            <h2 class="text-2xl font-bold mb-4">Training</h2>
-                             <ul class="list-disc list-inside">
-                                <li>Industrial Training Attachment</li>
-                                <li>Rice Transplanter & Combine Harvester- Operation, Repair & Maintenance</li>
-                                <li>Extension Field Trip Attachment</li>
-                                <li>Global Postharvest Loss Prevention: Fundamentals, Technologies, and Actors</li>
-                                <li>National Youth Assembly -NYA</li>
-                            </ul>
-                        </div>
-                        <div class="glass-card p-6 rounded-lg shadow-lg mt-8">
-                            <h2 class="text-2xl font-bold mb-4">Extracurricular Activities</h2>
-                            <ul class="list-disc list-inside">
-                                <li>Additional General Secretary, Bangladesh Agricultural University Career Club</li>
-                                <li>Committee Member, Volunteer for Bangladesh</li>
-                                <li>Active Citizens, British Council</li>
-                                <li>Volunteer, Bangladesh Biology Olympiad</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Academics Section -->
-            <section id="academics" class="section">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="md:col-span-1">
-                        <div class="glass-card p-6 rounded-lg shadow-lg">
-                             <h2 class="text-2xl font-bold mb-4">Contact</h2>
-                            <p><i class="fas fa-envelope mr-2"></i>tahmid.1705084@bau.edu.bd</p>
-                            <p><i class="fas fa-envelope mr-2"></i>tahmidxp96@gmail.com</p>
-                            <p><i class="fas fa-phone mr-2"></i>+880 1894-724754</p>
-                            <a href="https://www.linkedin.com/in/tahmid-hassan-khan" class="text-blue-500 hover:underline"><i class="fab fa-linkedin mr-2"></i>LinkedIn</a>
-                        </div>
-                        <div class="glass-card p-6 rounded-lg shadow-lg mt-8">
-                            <h2 class="text-2xl font-bold mb-4">Education</h2>
-                            <p class="font-semibold">Bachelor of Science in Agricultural Engineering</p>
-                            <p>Bangladesh Agricultural University (BAU), Mymensingh, Bangladesh.</p>
-                            <p class="text-gray-600">Jan 2017 - Aug 2024</p>
-                            <p><strong>CGPA:</strong> 2.68/4.00</p>
-                            <p><strong>Major:</strong> Farm Power and Machinery</p>
-                            <p><strong>Thesis:</strong> Design and Development of a Microcontroller-Based Automated Irrigation for Rice Field</p>
-                        </div>
-                         <div class="glass-card p-6 rounded-lg shadow-lg mt-8">
-                            <h2 class="text-2xl font-bold mb-4">Technical Skills</h2>
-                            <ul>
-                                <li><strong>Programming:</strong> Python, C/C++, R, LaTeX</li>
-                                <li><strong>Data Analysis:</strong> Microsoft Excel, GraphPad Prism</li>
-                                <li><strong>IoT & Embedded:</strong> Arduino IDE, Blynk</li>
-                                <li><strong>Design & Simulation:</strong> Fusion 360</li>
-                                <li><strong>Designing Tools:</strong> Adobe Creative Suite, Cinema4D</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="md:col-span-2">
-                        <div class="glass-card p-6 rounded-lg shadow-lg">
-                            <h2 class="text-2xl font-bold mb-4">Summary</h2>
-                            <ul class="list-disc list-inside">
-                                <li>Currently working as a Leaf Quality Officer at BAT Bangladesh, applying data-driven quality control practices and working closely with agri supply chains.</li>
-                                <li>Developed and field tested an automated irrigation system using ESP and ESP-NOW to optimize water usage in rice cultivation.</li>
-                                <li>Research interests include precision agriculture, climate-smart mechanization, IoT in agriculture, and embedded systems for field applications.</li>
-                                <li>Published 2 research papers Another one WIP on real-time irrigation control using wireless sensors.</li>
-                                <li>Looking for MS/PhD opportunities to advance innovations in smart agriculture, automation, and resource-efficient agriculture.</li>
-                            </ul>
-                        </div>
-                        <div class="glass-card p-6 rounded-lg shadow-lg mt-8">
-                            <h2 class="text-2xl font-bold mb-4">Research and Work Experiences</h2>
-                            <div class="mb-4">
-                                <h3 class="text-xl font-semibold">Leaf Quality Officer, British American Tobacco Bangladesh LTD</h3>
-                                <p class="text-gray-600">August 2024 - Present</p>
-                                <ul class="list-disc list-inside ml-4">
-                                    <li>Collected and analyzed field and lab samples per crop cycle to assess moisture levels, leaf quality, and contamination.</li>
-                                    <li>Monitored and evaluated field performance data at various crop stages.</li>
-                                    <li>Conducted daily inspections of harvested tobacco to validate grading accuracy.</li>
-                                    <li>Organized and led training sessions for farmers, field technicians, and seasonal staff.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-semibold">Research Fellow, Bangladesh Institute of Nuclear Agriculture</h3>
-                                <p class="text-gray-600">October 2021 - July 2024</p>
-                                <p class="font-medium mt-2">Solar-Powered Automated Irrigation System for Rice Fields</p>
-                                <ul class="list-disc list-inside ml-4">
-                                    <li>Designed and deployed an automated irrigation system using ESP8266/ESP32 microcontrollers.</li>
-                                    <li>Programmed microcontrollers using Arduino IDE (C language).</li>
-                                    <li>Integrated a solar-powered power unit and an automatic data logger.</li>
-                                    <li>Utilized Blynk IoT platform for real-time remote monitoring.</li>
-                                    <li>Installed and field-tested the system in a rice paddy.</li>
-                                </ul>
-                            </div>
-                        </div>
-                         <div class="glass-card p-6 rounded-lg shadow-lg mt-8">
-                            <h2 class="text-2xl font-bold mb-4">Publications and Conferences</h2>
-                             <ul class="list-disc list-inside">
-                               <li>Hassan, R., et al. (2020). Prediction of Epidemics Trend of COVID-19 in Bangladesh. <em>Frontiers in Public Health</em>.</li>
-                               <li>Hasan, M. A., et al. (2024). Technical evaluation of low-head drip irrigation system. <em>Global Research in Environment and Sustainability</em>.</li>
-                               <li>Khan, M. T. H., et al. (2025, February). Automated irrigation for rice fields. <em>1st International Conference on Agricultural Machinery and Bioresource Engineering (ICAMBE)</em>.</li>
-                             </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
+        <div class="z-10 text-center p-8 glass-panel">
+            <h1 class="text-4xl md:text-7xl font-bold tracking-wider">Md. Tahmid Hassan Khan</h1>
+            <p id="homepage-subtitle" class="mt-2 text-lg transition-opacity duration-500">Agricultural Engineer | Researcher</p>
+            <button id="explore-btn" data-mode="academics" class="enter-portfolio-btn mt-8 px-8 py-3 bg-yellow-500 font-bold rounded-full hover:bg-yellow-600 transition-all duration-300 transform hover:scale-105">Explore</button>
+        </div>
+        <div class="absolute bottom-10 z-10 p-4 glass-panel">
+             <div class="flex items-center space-x-4">
+                <span id="mode-label-left" class="font-semibold transition-opacity duration-500 opacity-50">Academics</span>
+                <label class="relative inline-block w-14 h-8">
+                    <input type="checkbox" id="homepage-theme-checkbox" class="opacity-0 w-0 h-0"/>
+                    <span class="slider-bg absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-gray-600/50 rounded-full transition-colors duration-300 before:absolute before:h-6 before:w-6 before:left-1 before:bottom-1 before:bg-white before:rounded-full before:transition-transform before:duration-300"></span>
+                </label>
+                <span id="mode-label-right" class="font-semibold transition-opacity duration-500 opacity-100">Corporate</span>
+             </div>
+        </div>
     </div>
 
-<script type="text/javascript" src="js/script.js"></script>
+    <!-- Main Portfolio Page -->
+    <div id="portfolio-page" class="relative">
+        <div class="parallax-bg"></div>
+        <header class="sticky top-0 z-50 p-4">
+             <div class="container mx-auto glass-panel p-4 flex justify-between items-center">
+                <a href="#" id="home-link" class="text-xl font-bold">Tahmid H. Khan</a>
+                <nav class="hidden md:flex items-center space-x-4">
+                     <span class="font-semibold">Corporate</span>
+                     <label class="relative inline-block w-14 h-8"><input type="checkbox" id="theme-checkbox" class="opacity-0 w-0 h-0"/><span class="absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-gray-300 rounded-full transition-colors duration-300 before:absolute before:h-6 before:w-6 before:left-1 before:bottom-1 before:bg-white before:rounded-full before:transition-transform before:duration-300"></span></label>
+                     <span class="font-semibold">Academics</span>
+                </nav>
+                <button id="menu-btn" class="md:hidden z-50"><i class="fas fa-bars fa-2x"></i></button>
+             </div>
+        </header>
+        
+        <div id="mobile-menu" class="fixed top-0 right-0 h-full w-64 glass-panel z-40 pt-24 p-6 md:hidden">
+            <div class="flex flex-col items-center space-y-6">
+                <span class="font-semibold">Corporate</span>
+                <label class="relative inline-block w-14 h-8"><input type="checkbox" id="mobile-theme-checkbox" class="opacity-0 w-0 h-0"/><span class="absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-gray-300 rounded-full transition-colors duration-300 before:absolute before:h-6 before:w-6 before:left-1 before:bottom-1 before:bg-white before:rounded-full before:transition-transform before:duration-300"></span></label>
+                <span class="font-semibold">Academics</span>
+            </div>
+        </div>
+
+        <div class="container mx-auto p-4 md:p-8" style="perspective: 1000px;">
+            <main>
+                <!-- Sections will be toggled here -->
+                <section id="corporate" class="section">
+                    <div class="glass-panel p-6 mb-8 interactive-card reveal">
+                        <h2 class="text-2xl font-bold mb-4">About Me</h2>
+                        <p>An agricultural engineer specializing in automation and mechanization. Expert in precision farming, sensor technologies, and data-driven decision-making. Passionate about leveraging technology to enhance agricultural efficiency and sustainability.</p>
+                    </div>
+                    <div class="glass-panel p-6 mb-8 reveal">
+                        <h2 class="text-2xl font-bold mb-4 text-center">Work Experience</h2>
+                        <div id="corp-work-slider" class="slider-container relative">
+                            <div class="slider-track">
+                                <div class="slider-item p-4"><div class="interactive-card bg-white/30 p-6 rounded-2xl overflow-hidden md:flex md:space-x-6"><img src="https://placehold.co/600x400/3B82F6/FFFFFF?text=BAT" alt="Work at BAT" class="w-full md:w-1/3 h-48 object-cover rounded-lg"><div class="mt-4 md:mt-0"><h3 class="text-xl font-semibold">Leaf Quality Officer</h3><p class="font-medium text-blue-800">British American Tobacco</p><p class="opacity-70">Aug 2024 - Present</p></div></div></div>
+                                <div class="slider-item p-4"><div class="interactive-card bg-white/30 p-6 rounded-2xl overflow-hidden md:flex md:space-x-6"><img src="https://placehold.co/600x400/10B981/FFFFFF?text=BINA" alt="Work at BINA" class="w-full md:w-1/3 h-48 object-cover rounded-lg"><div class="mt-4 md:mt-0"><h3 class="text-xl font-semibold">Research Fellow</h3><p class="font-medium text-blue-800">Bangladesh Institute of Nuclear Agriculture</p><p class="opacity-70">Oct 2021 - Jul 2024</p></div></div></div>
+                            </div>
+                            <button class="slider-prev absolute top-1/2 left-0 md:-left-4 transform -translate-y-1/2 bg-white/50 p-2 rounded-full shadow-md hover:bg-white/80"><i class="fas fa-chevron-left"></i></button>
+                            <button class="slider-next absolute top-1/2 right-0 md:-right-4 transform -translate-y-1/2 bg-white/50 p-2 rounded-full shadow-md hover:bg-white/80"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="academics" class="section">
+                     <div class="glass-panel p-6 mb-8 interactive-card reveal">
+                        <h2 class="text-2xl font-bold mb-4">Summary</h2>
+                        <ul class="list-disc list-inside space-y-2">
+                           <li>Developed and field tested an automated irrigation system using ESP and ESP-NOW to optimize water usage in rice cultivation.</li>
+                           <li>Research interests include precision agriculture, climate-smart mechanization, IoT in agriculture, and embedded systems.</li>
+                           <li>Published 2 research papers and seeking MS/PhD opportunities to advance innovations in smart agriculture.</li>
+                        </ul>
+                    </div>
+                    <div class="glass-panel p-6 mb-8 reveal">
+                        <h2 class="text-2xl font-bold mb-4 text-center">Publications & Research</h2>
+                        <div class="space-y-4" id="research-accordion">
+                            <!-- Accordion items will be injected here by JS -->
+                        </div>
+                    </div>
+                </section>
+
+                <div class="glass-panel p-6 mb-8 reveal">
+                    <h2 class="text-2xl font-bold mb-4 text-center">Training & Certifications</h2>
+                    <div class="space-y-4" id="training-accordion">
+                        <!-- Training accordion items injected here -->
+                    </div>
+                </div>
+                
+                <div class="glass-panel p-6 mt-8 interactive-card reveal text-center">
+                     <h2 class="text-2xl font-bold mb-4">Contact Me</h2>
+                     <p class="mb-4">Feel free to reach out for collaborations or inquiries.</p>
+                     <a href="mailto:tahmidxp96@gmail.com" class="inline-block px-6 py-3 bg-white/30 rounded-full font-semibold hover:bg-white/50 transition-colors">
+                        <i class="fas fa-envelope mr-2"></i> Send an Email
+                     </a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const homepage = document.getElementById('homepage');
+            const portfolioPage = document.getElementById('portfolio-page');
+            const exploreBtn = document.getElementById('explore-btn');
+            
+            // --- Data for accordions ---
+            const researchData = [
+                { title: 'Prediction of Epidemics Trend of COVID-19', journal: 'Frontiers in Public Health (2020)', image: 'https://placehold.co/600x400/F59E0B/FFFFFF?text=COVID-19+Research', details: 'Contributed to a predictive model analyzing the trend of the COVID-19 epidemic in Bangladesh, utilizing statistical methods to forecast its spread.' },
+                { title: 'Technical Evaluation of Low-Head Drip Irrigation', journal: 'Global Research in Environment and Sustainability (2024)', image: 'https://placehold.co/600x400/76A9FA/FFFFFF?text=Irrigation+System', details: 'Conducted a technical assessment of a low-head drip irrigation system to evaluate its efficiency, water distribution uniformity, and suitability for small-scale farming.' },
+                { title: 'Automated Irrigation for Rice Fields', journal: 'ICAMBE Conference (2025)', image: 'https://placehold.co/600x400/45B39D/FFFFFF?text=Smart+Farming', details: 'Presented a poster on the design and implementation of a sustainable, automated irrigation solution for rice fields to enhance water management efficiency.' }
+            ];
+            const trainingData = [
+                { title: 'Industrial Training Attachment', provider: 'BARI', image: 'https://placehold.co/600x400/5DADE2/FFFFFF?text=Industrial+Training', details: 'Completed an industrial attachment focusing on farm machinery and post-harvest process engineering.' },
+                { title: 'Rice Transplanter & Combine Harvester Operation', provider: 'Dept. of Agricultural Extension', image: 'https://placehold.co/600x400/AF7AC5/FFFFFF?text=Machinery+Training', details: 'Received hands-on training on the operation, repair, and maintenance of modern agricultural machinery.' },
+                { title: 'Global Postharvest Loss Prevention', provider: 'Coursera - University of Illinois', image: 'https://placehold.co/600x400/F4D03F/FFFFFF?text=Online+Course', details: 'Completed an online course covering fundamentals, technologies, and key actors in preventing postharvest loss globally.' }
+            ];
+
+            // --- Accordion Builder ---
+            function buildAccordion(containerId, data) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = data.map((item, index) => `
+                    <div class="accordion-item interactive-card bg-white/20 p-4 rounded-2xl">
+                        <div class="accordion-header flex justify-between items-center cursor-pointer">
+                            <h3 class="text-lg font-semibold">${item.title}</h3>
+                            <i class="fas fa-plus accordion-icon transition-transform duration-300"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="md:flex md:space-x-6 items-center">
+                                <img src="${item.image}" alt="${item.title}" class="w-full md:w-1/3 h-40 object-cover rounded-lg mb-4 md:mb-0">
+                                <div>
+                                    <p class="font-medium italic opacity-80 mb-2">${item.provider || item.journal}</p>
+                                    <p>${item.details}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            buildAccordion('research-accordion', researchData);
+            buildAccordion('training-accordion', trainingData);
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    header.parentElement.classList.toggle('active');
+                });
+            });
+
+
+            // --- Parallax & 3D Tilt Effect ---
+            const portfolioContainer = document.querySelector('#portfolio-page .container');
+            portfolioContainer.addEventListener('mousemove', e => {
+                document.querySelectorAll('.interactive-card').forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const { width, height } = rect;
+                    const rotateX = (y / height - 0.5) * -15; // Max 7.5 deg tilt
+                    const rotateY = (x / width - 0.5) * 15;  // Max 7.5 deg tilt
+                    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                });
+            });
+            portfolioContainer.addEventListener('mouseleave', () => {
+                 document.querySelectorAll('.interactive-card').forEach(card => {
+                    card.style.transform = `rotateX(0) rotateY(0)`;
+                 });
+            });
+            window.addEventListener('scroll', () => {
+                const parallaxBg = document.querySelector('.parallax-bg');
+                parallaxBg.style.transform = `translateY(${window.scrollY * 0.3}px)`;
+            });
+
+            // --- Homepage & Page Navigation Logic ---
+            function showPortfolio(mode) {
+                homepage.style.display = 'none';
+                portfolioPage.style.display = 'block';
+                const isAcademic = mode === 'academics';
+                document.body.classList.toggle('academic-theme', isAcademic);
+                document.getElementById('theme-checkbox').checked = isAcademic;
+                document.getElementById('mobile-theme-checkbox').checked = isAcademic;
+                updateActiveSection();
+                initActiveSlider();
+                setTimeout(() => {
+                    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+                }, 50);
+            }
+            exploreBtn.addEventListener('click', () => showPortfolio(exploreBtn.dataset.mode));
+            document.getElementById('home-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                portfolioPage.style.display = 'none';
+                homepage.style.display = 'flex';
+            });
+            
+            // --- Theme Switchers ---
+            function handleThemeChange(isAcademic) {
+                document.body.classList.toggle('academic-theme', isAcademic);
+                document.getElementById('theme-checkbox').checked = isAcademic;
+                document.getElementById('mobile-theme-checkbox').checked = isAcademic;
+                updateActiveSection();
+                initActiveSlider();
+            }
+            document.getElementById('theme-checkbox').addEventListener('change', (e) => handleThemeChange(e.target.checked));
+            document.getElementById('mobile-theme-checkbox').addEventListener('change', (e) => handleThemeChange(e.target.checked));
+            document.getElementById('homepage-theme-checkbox').addEventListener('change', function() {
+                const isCorporate = this.checked;
+                document.getElementById('corp-background').style.opacity = isCorporate ? '1' : '0';
+                document.getElementById('acad-background').style.opacity = isCorporate ? '0' : '1';
+                homepage.style.backgroundColor = isCorporate ? '#1f2937' : '#0c3c26';
+                exploreBtn.dataset.mode = isCorporate ? 'corporate' : 'academics';
+                exploreBtn.className = exploreBtn.className.replace(/bg-[\w-]+/, isCorporate ? 'bg-blue-600' : 'bg-yellow-500').replace(/hover:bg-[\w-]+/, isCorporate ? 'hover:bg-blue-700' : 'hover:bg-yellow-600');
+                document.getElementById('homepage-subtitle').textContent = isCorporate ? 'Automation & Mechanization Specialist' : 'Agricultural Engineer | Researcher';
+                document.getElementById('mode-label-left').style.opacity = isCorporate ? '1' : '0.5';
+                document.getElementById('mode-label-right').style.opacity = isCorporate ? '0.5' : '1';
+            });
+
+
+            function updateActiveSection() {
+                const isAcademic = document.body.classList.contains('academic-theme');
+                document.getElementById('academics').classList.toggle('active', isAcademic);
+                document.getElementById('corporate').classList.toggle('active', !isAcademic);
+            }
+
+            // --- Intersection Observer for Animations ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.1 });
+
+            // --- Slider Logic ---
+            let slidersInitialized = {};
+            function initSlider(sliderId) {
+                if (slidersInitialized[sliderId]) return;
+                const slider = document.getElementById(sliderId);
+                if (!slider || !slider.offsetParent) return;
+                const track = slider.querySelector('.slider-track');
+                const items = slider.querySelectorAll('.slider-item');
+                if (items.length === 0) return;
+
+                const nextBtn = slider.querySelector('.slider-next');
+                const prevBtn = slider.querySelector('.slider-prev');
+                let currentIndex = 0;
+                function updateSlider() { track.style.transform = `translateX(-${currentIndex * slider.getBoundingClientRect().width}px)`; }
+                nextBtn.addEventListener('click', () => { currentIndex = (currentIndex + 1) % items.length; updateSlider(); });
+                prevBtn.addEventListener('click', () => { currentIndex = (currentIndex - 1 + items.length) % items.length; updateSlider(); });
+                
+                new ResizeObserver(updateSlider).observe(slider);
+                slidersInitialized[sliderId] = true;
+            }
+            
+            function initActiveSlider() {
+                setTimeout(() => {
+                    if (document.getElementById('corporate').classList.contains('active')) initSlider('corp-work-slider');
+                }, 100);
+            }
+
+            // --- Hamburger Menu ---
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
+                menuBtn.innerHTML = mobileMenu.classList.contains('open') ? '<i class="fas fa-times fa-2x"></i>' : '<i class="fas fa-bars fa-2x"></i>';
+            });
+
+            // --- Dynamic CSS for Switchers ---
+            const style = document.createElement('style');
+            style.innerHTML = `
+                input:checked + span { background-color: var(--acad-primary); }
+                body:not(.academic-theme) input:checked + span { background-color: var(--corp-primary) !important; }
+                input:checked + span:before { transform: translateX(24px); }
+
+                #homepage-theme-checkbox:checked + .slider-bg { background-color: rgba(37, 99, 235, 0.5) !important; }
+                #homepage-theme-checkbox:not(:checked) + .slider-bg { background-color: rgba(212, 175, 55, 0.5) !important; }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
 </body>
 </html>
+
