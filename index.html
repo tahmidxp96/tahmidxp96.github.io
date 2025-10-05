@@ -3,508 +3,330 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Md. Tahmid Hassan Khan | Interactive Portfolio</title>
+    <title>Md. Tahmid Hassan Khan - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0;700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            /* Corporate (Blue) Theme */
-            --corp-bg-start: #5e81ac;
-            --corp-bg-end: #81a1c1;
-            --corp-text: #eceff4;
-            --corp-accent: #88c0d0;
-
-            /* Academic (Green) Theme */
-            --acad-bg-start: #a3be8c;
-            --acad-bg-end: #c5e4a5;
-            --acad-text: #2e3440;
-            --acad-accent: #8fbcbb;
-        }
-
-        /* --- Custom Cursor --- */
-        body { cursor: none; }
-        .cursor-dot, .cursor-outline {
-            pointer-events: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            border-radius: 50%; z-index: 9999; opacity: 0; transition: opacity 0.3s ease-in-out, transform 0.2s ease-in-out, background-color 0.3s ease, border-color 0.3s ease;
-        }
-        .cursor-dot { width: 8px; height: 8px; background-color: #fff; }
-        .cursor-outline { width: 40px; height: 40px; border: 2px solid rgba(255, 255, 255, 0.5); }
-        .cursor-dot.dark { background-color: #2e3440; }
-        .cursor-outline.dark { border-color: rgba(46, 52, 64, 0.5); }
-        body:hover .cursor-dot, body:hover .cursor-outline { opacity: 1; }
-        .cursor-outline.hover { transform: translate(-50%, -50%) scale(1.5); border-color: rgba(255, 255, 255, 0.8); }
-        .cursor-outline.dark.hover { border-color: rgba(46, 52, 64, 0.8); }
-
-
-        /* --- Glassmorphism & Themes --- */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 1.5rem; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
-        }
         body {
-            font-family: 'Inter', sans-serif; background: linear-gradient(45deg, var(--corp-bg-start), var(--corp-bg-end));
-            color: var(--corp-text); background-size: 200% 200%; animation: gradient-animation 15s ease infinite;
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #e2e8f0;
         }
-        body.academic-theme {
-            font-family: 'Lora', serif; background: linear-gradient(45deg, var(--acad-bg-start), var(--acad-bg-end));
-            background-size: 200% 200%; animation: gradient-animation 15s ease infinite; color: var(--acad-text);
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
         }
-        
-        /* --- Homepage Animations --- */
-        @keyframes gradient-animation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        @keyframes particle-float {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(-100vh); opacity: 0; }
+        .glass-effect:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
         }
-        @keyframes button-pulse { 0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(0,0,0,0.2); } 50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(0,0,0,0.4); } }
-        @keyframes float { 0% { transform: translateY(105vh) rotate(0deg); opacity: 0; } 10%, 90% { opacity: 1; } 100% { transform: translateY(-5vh) rotate(360deg); opacity: 0; } }
-        
-        .homepage-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity 1s ease-in-out; }
-        .particle { position: absolute; border-radius: 50%; animation-name: particle-float; animation-timing-function: linear; animation-iteration-count: infinite; }
-        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-
-        /* --- Theme-specific elements --- */
-        .theme-label {
-            font-weight: 600;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            color: var(--corp-text);
+        .liquid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
         }
-        body.academic-theme .theme-label {
-            color: var(--acad-text);
+        .liquid-bg::before, .liquid-bg::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.2;
         }
-        .company-name { color: var(--corp-accent); }
-        body.academic-theme .company-name { color: #556b2f; }
-
-
-        /* --- Background Icons --- */
-        .icon-bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
-        .icon-bg-container .floating-icon { position: absolute; animation: float 20s infinite linear; }
-        #corp-icons .floating-icon { color: rgba(236, 239, 244, 0.08); }
-        #acad-icons .floating-icon { color: rgba(46, 52, 64, 0.05); }
-        #corp-icons, #acad-icons { display: none; }
-        body:not(.academic-theme) #corp-icons { display: block; }
-        body.academic-theme #acad-icons { display: block; }
-
-        /* --- 3D Hover & Parallax --- */
-        .interactive-card { transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); transform-style: preserve-3d; }
-        
-        /* --- Accordion --- */
-        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out, padding 0.5s ease-out; }
-        .accordion-item.active .accordion-content { max-height: 500px; padding-top: 1rem; padding-bottom: 1rem; }
-        .accordion-item.active .accordion-icon { transform: rotate(45deg); }
-
-        /* --- Slider & Menu --- */
-        .slider-container { overflow: hidden; }
-        .slider-track { display: flex; transition: transform 0.5s ease-in-out; }
-        .slider-item { min-width: 100%; box-sizing: border-box; }
-        #mobile-menu { transform: translateX(100%); transition: transform 0.3s ease-in-out; }
-        #mobile-menu.open { transform: translateX(0); }
-
-        /* --- Utility --- */
-        #portfolio-page, .section { display: none; }
-        .section.active { display: block; }
+        .liquid-bg::before {
+            background: radial-gradient(circle, #22c55e, transparent 60%);
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            left: -100px;
+            animation: moveLiquid 30s infinite alternate;
+        }
+        .liquid-bg::after {
+            background: radial-gradient(circle, #3b82f6, transparent 60%);
+            width: 500px;
+            height: 500px;
+            bottom: -150px;
+            right: -150px;
+            animation: moveLiquid2 40s infinite alternate;
+        }
+        @keyframes moveLiquid {
+            from { transform: translate(0, 0) scale(1) rotate(0deg); }
+            to { transform: translate(150px, 100px) scale(1.2) rotate(15deg); }
+        }
+        @keyframes moveLiquid2 {
+            from { transform: translate(0, 0) scale(1) rotate(0deg); }
+            to { transform: translate(-150px, -100px) scale(0.8) rotate(-25deg); }
+        }
+        .nav-link {
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        .nav-link:hover {
+            color: #22c55e;
+            text-shadow: 0 0 10px #22c55e;
+        }
+        .skill-tag {
+            background-color: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.5);
+            transition: all 0.2s ease;
+        }
+        .skill-tag:hover {
+            background-color: rgba(34, 197, 94, 0.4);
+            transform: scale(1.05);
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 3rem;
+        }
     </style>
 </head>
-<body class="antialiased academic-theme">
-    <div class="cursor-dot dark"></div>
-    <div class="cursor-outline dark"></div>
+<body class="antialiased">
 
-    <!-- Homepage -->
-    <div id="homepage" class="relative w-screen h-screen overflow-hidden flex flex-col justify-center items-center">
-        <!-- Academic Scene -->
-        <div id="acad-homepage-bg" class="homepage-bg opacity-100" style="background: #e8f5e9;">
-            <div id="acad-particles" class="absolute top-0 left-0 w-full h-full"></div>
+    <div class="liquid-bg"></div>
+
+    <!-- Header / Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-10 glass-effect mx-4 mt-4 rounded-2xl overflow-hidden transition-all duration-300 ease-in-out">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <h1 class="text-xl font-bold tracking-tighter">Tahmid H. Khan</h1>
+            <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-300">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#publications" class="nav-link">Publications</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
         </div>
-        <!-- Corporate Scene -->
-        <div id="corp-homepage-bg" class="homepage-bg opacity-0" style="background-color: #3b4252;">
-            <div id="corp-particles" class="absolute top-0 left-0 w-full h-full"></div>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 flex flex-col space-y-2 text-sm">
+             <a href="#about" class="nav-link text-center py-1">About</a>
+             <a href="#experience" class="nav-link text-center py-1">Experience</a>
+             <a href="#projects" class="nav-link text-center py-1">Projects</a>
+             <a href="#publications" class="nav-link text-center py-1">Publications</a>
+             <a href="#skills" class="nav-link text-center py-1">Skills</a>
+             <a href="#contact" class="nav-link text-center py-1">Contact</a>
         </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-24 pt-32">
         
-        <!-- Center Content -->
-        <div class="z-10 text-center flex flex-col items-center p-4 sm:p-8 mb-28 sm:mb-24">
-            <img src="https://placehold.co/128x128/FFFFFF/333333?text=THK" alt="Md. Tahmid Hassan Khan" class="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-black/10 mb-6 shadow-2xl">
-            <h1 id="homepage-title" class="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight transition-colors duration-500" style="color: #2e3440;">Md. Tahmid Hassan Khan</h1>
-            <p id="homepage-subtitle" class="mt-4 text-lg sm:text-xl md:text-2xl transition-colors duration-500" style="color: #4c566a;">Agricultural Engineer | Researcher</p>
-            <button id="explore-btn" data-mode="academics" class="enter-portfolio-btn mt-8 px-8 py-3 md:px-10 md:py-4 font-bold rounded-full transition-all duration-300 transform hover:scale-105 text-white" style="background-color: #556b2f; animation: button-pulse 2.5s infinite;">Explore Portfolio</button>
-        </div>
-
-        <!-- Switcher -->
-        <div class="absolute bottom-10 z-10 p-4 glass-panel">
-             <div class="flex items-center space-x-4">
-                <span id="mode-label-left" class="theme-label transition-opacity duration-500 opacity-100">Academics</span>
-                <label class="relative inline-block w-14 h-8">
-                    <input type="checkbox" id="homepage-theme-checkbox" class="opacity-0 w-0 h-0"/>
-                    <span class="slider-bg absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-gray-600/50 rounded-full transition-colors duration-300 before:absolute before:h-6 before:w-6 before:left-1 before:bottom-1 before:bg-white before:rounded-full before:transition-transform before:duration-300"></span>
-                </label>
-                <span id="mode-label-right" class="theme-label transition-opacity duration-500 opacity-50">Corporate</span>
-             </div>
-        </div>
-    </div>
-
-    <!-- Main Portfolio Page -->
-    <div id="portfolio-page" class="relative">
-        <div class="icon-bg-container" id="corp-icons"></div>
-        <div class="icon-bg-container" id="acad-icons"></div>
-
-        <header class="sticky top-0 z-50 p-4">
-             <div class="container mx-auto glass-panel p-4 flex justify-between items-center">
-                <a href="#" id="home-link" class="text-xl font-bold">Tahmid H. Khan</a>
-                <nav class="hidden md:flex items-center space-x-4">
-                     <span class="theme-label">Corporate</span>
-                     <label class="relative inline-block w-14 h-8"><input type="checkbox" id="theme-checkbox" class="opacity-0 w-0 h-0"/><span class="absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-gray-300 rounded-full transition-colors duration-300 before:absolute before:h-6 before:w-6 before:left-1 before:bottom-1 before:bg-white before:rounded-full before:transition-transform before:duration-300"></span></label>
-                     <span class="theme-label">Academics</span>
-                </nav>
-                <button id="menu-btn" class="md:hidden z-50"><i class="fas fa-bars fa-2x"></i></button>
-             </div>
-        </header>
-        
-        <div id="mobile-menu" class="fixed top-0 right-0 h-full w-64 glass-panel z-40 pt-24 p-6 md-hidden">
-            <div class="flex flex-col items-center space-y-6">
-                <span class="theme-label">Corporate</span>
-                <label class="relative inline-block w-14 h-8"><input type="checkbox" id="mobile-theme-checkbox" class="opacity-0 w-0 h-0"/><span class="absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-gray-300 rounded-full transition-colors duration-300 before:absolute before:h-6 before:w-6 before:left-1 before:bottom-1 before:bg-white before:rounded-full before:transition-transform before:duration-300"></span></label>
-                <span class="theme-label">Academics</span>
+        <!-- Hero Section -->
+        <section id="about" class="min-h-[70vh] flex flex-col justify-center items-center text-center">
+            <h2 class="text-4xl md:text-6xl font-black mb-4 tracking-tighter">Md. Tahmid Hassan Khan</h2>
+            <p class="text-xl md:text-2xl text-green-400 font-medium mb-8">Agricultural Engineer | IoT Specialist | Sustainable Farming Advocate</p>
+            <p class="max-w-3xl text-slate-300 leading-relaxed">
+                A dedicated Agricultural Engineer focused on automation and data-driven decision-making to foster sustainable agriculture. My work involves developing IoT systems and innovative machinery to enhance resource efficiency and promote environmental stewardship. I am passionate about creating smart, sustainable solutions for real-world agricultural challenges.
+            </p>
+            <div class="mt-10 flex flex-wrap justify-center gap-4">
+                <a href="mailto:tahmidxp96@gmail.com" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-all flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    Contact Me
+                </a>
+                <a href="#projects" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-all">View My Work</a>
             </div>
-        </div>
+        </section>
 
-        <div class="container mx-auto p-4 md:p-8" style="perspective: 1000px;">
-            <main>
-                <!-- Sections will be toggled here -->
-                <section id="corporate" class="section">
-                    <div class="glass-panel p-6 mb-8 interactive-card reveal">
-                        <h2 class="text-2xl font-bold mb-4">About Me</h2>
-                        <p>An agricultural engineer specializing in automation and mechanization. Expert in precision farming, sensor technologies, and data-driven decision-making. Passionate about leveraging technology to enhance agricultural efficiency and sustainability.</p>
+        <!-- Experience Section -->
+        <section id="experience" class="py-20">
+            <div class="section-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <h3 class="text-3xl font-bold tracking-tight">Research & Work Experience</h3>
+            </div>
+            <div class="space-y-8 max-w-4xl mx-auto">
+                <div class="glass-effect p-6 rounded-2xl">
+                    <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-2 sm:gap-0">
+                        <h4 class="font-bold text-xl text-green-300">Leaf Quality Officer</h4>
+                        <span class="text-sm text-slate-400">Aug 2024 - Present</span>
                     </div>
-                    <div class="glass-panel p-6 mb-8 reveal relative">
-                        <h2 class="text-2xl font-bold mb-4 text-center">Work Experience</h2>
-                        <div id="corp-work-slider" class="slider-container">
-                            <div class="slider-track">
-                                <div class="slider-item p-4"><div class="interactive-card bg-slate-900/30 backdrop-blur-sm p-6 rounded-2xl overflow-hidden md:flex md:space-x-6"><img src="https://placehold.co/600x400/3B82F6/FFFFFF?text=BAT" alt="Work at BAT" class="w-full md:w-1/3 h-48 object-cover rounded-lg"><div class="mt-4 md:mt-0"><h3 class="text-xl font-semibold">Leaf Quality Officer</h3><p class="font-medium company-name">British American Tobacco</p><p class="opacity-70">Aug 2024 - Present</p></div></div></div>
-                                <div class="slider-item p-4"><div class="interactive-card bg-slate-900/30 backdrop-blur-sm p-6 rounded-2xl overflow-hidden md:flex md:space-x-6"><img src="https://placehold.co/600x400/10B981/FFFFFF?text=BINA" alt="Work at BINA" class="w-full md:w-1/3 h-48 object-cover rounded-lg"><div class="mt-4 md:mt-0"><h3 class="text-xl font-semibold">Research Fellow</h3><p class="font-medium company-name">Bangladesh Institute of Nuclear Agriculture</p><p class="opacity-70">Oct 2021 - Jul 2024</p></div></div></div>
-                            </div>
-                        </div>
-                        <button class="slider-prev absolute top-1/2 left-2 transform -translate-y-1/2 bg-white/50 p-2 rounded-full shadow-md hover:bg-white/80 z-10"><i class="fas fa-chevron-left"></i></button>
-                        <button class="slider-next absolute top-1/2 right-2 transform -translate-y-1/2 bg-white/50 p-2 rounded-full shadow-md hover:bg-white/80 z-10"><i class="fas fa-chevron-right"></i></button>
+                    <p class="text-md font-medium text-slate-200 mb-4">British American Tobacco (BAT) Bangladesh</p>
+                    <ul class="list-disc list-inside text-slate-300 space-y-2">
+                        <li>Advancing sustainable supply chains through data-driven quality control practices.</li>
+                        <li>Analyzing field and lab samples to reduce waste and improve resource management.</li>
+                        <li>Ensuring high-quality post-harvest handling to enhance product longevity and reduce loss.</li>
+                        <li>Training farmers on sustainable practices, quality parameters, and environmental compliance.</li>
+                    </ul>
+                </div>
+                <div class="glass-effect p-6 rounded-2xl">
+                     <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-2 sm:gap-0">
+                        <h4 class="font-bold text-xl text-green-300">Research Fellow</h4>
+                        <span class="text-sm text-slate-400">Oct 2021 - Jul 2024</span>
                     </div>
-                </section>
-                
-                <section id="academics" class="section">
-                     <div class="glass-panel p-6 mb-8 interactive-card reveal">
-                        <h2 class="text-2xl font-bold mb-4">Summary</h2>
-                        <ul class="list-disc list-inside space-y-2">
-                           <li>Developed and field tested an automated irrigation system using ESP and ESP-NOW to optimize water usage in rice cultivation.</li>
-                           <li>Research interests include precision agriculture, climate-smart mechanization, IoT in agriculture, and embedded systems.</li>
-                           <li>Published 2 research papers and seeking MS/PhD opportunities to advance innovations in smart agriculture.</li>
-                        </ul>
-                    </div>
-                    <div class="glass-panel p-6 mb-8 reveal">
-                        <h2 class="text-2xl font-bold mb-4 text-center">Publications & Research</h2>
-                        <div class="space-y-4" id="research-accordion">
-                            <!-- Accordion items will be injected here by JS -->
-                        </div>
-                    </div>
-                </section>
-
-                <div class="glass-panel p-6 mb-8 reveal">
-                    <h2 class="text-2xl font-bold mb-4 text-center">Training & Certifications</h2>
-                    <div class="space-y-4" id="training-accordion">
-                        <!-- Training accordion items injected here -->
+                    <p class="text-md font-medium text-slate-200 mb-4">Bangladesh Institute of Nuclear Agriculture</p>
+                    <ul class="space-y-3 text-slate-300">
+                        <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-1 text-green-400 flex-shrink-0"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><span>Developed a <span class="font-semibold text-white">solar-powered</span> automated irrigation system, promoting renewable energy in agriculture.</span></li>
+                        <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-1 text-green-400 flex-shrink-0"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg><span>Engineered the system for significant <span class="font-semibold text-white">water efficiency</span>, conserving a critical natural resource.</span></li>
+                        <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-1 text-green-400 flex-shrink-0"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg><span>Utilized ESP32 microcontrollers and Blynk IoT for precise, remote resource management.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Projects Section -->
+        <section id="projects" class="py-20">
+            <div class="section-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9L12 2l9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <h3 class="text-3xl font-bold tracking-tight">Key Projects & Thesis</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="glass-effect p-6 rounded-2xl flex flex-col">
+                    <h4 class="font-bold text-xl text-green-300 mb-2">Thesis: Automated Irrigation for Sustainable Farming</h4>
+                    <p class="text-slate-300 flex-grow">
+                        Designed and field-tested a smart irrigation system using ESP32 and solar power. This project demonstrated significant water savings and reduced reliance on manual labor, proving how targeted technology can lead to more sustainable and productive agriculture.
+                    </p>
+                    <div class="mt-4 text-green-400 flex items-center gap-2 text-sm font-medium">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                        <span>Resource Efficiency</span>
                     </div>
                 </div>
-                
-                <div class="glass-panel p-6 mt-8 interactive-card reveal text-center">
-                     <h2 class="text-2xl font-bold mb-4">Contact Me</h2>
-                     <p class="mb-4">Feel free to reach out for collaborations or inquiries.</p>
-                     <a href="mailto:tahmidxp96@gmail.com" class="inline-block px-6 py-3 bg-white/30 rounded-full font-semibold hover:bg-white/50 transition-colors">
-                        <i class="fas fa-envelope mr-2"></i> Send an Email
-                     </a>
+                <div class="glass-effect p-6 rounded-2xl flex flex-col">
+                    <h4 class="font-bold text-xl text-green-300 mb-2">All-in-one Silage Machine</h4>
+                     <p class="text-slate-300 flex-grow">
+                        A prize-winning design concept for streamlining the silage production process. This innovation aims to reduce post-harvest loss and improve feed quality for livestock, contributing to a more sustainable and efficient agricultural cycle.
+                    </p>
+                    <div class="mt-4 text-green-400 flex items-center gap-2 text-sm font-medium">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13V6a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v7a7 7 0 0 1-7 7h-2zm-1-11v2a3 3 0 0 0 6 0v-2"></path></svg>
+                        <span>Circular Agriculture Innovation</span>
+                    </div>
                 </div>
-            </main>
-        </div>
-    </div>
+            </div>
+        </section>
+
+        <!-- Publications Section -->
+        <section id="publications" class="py-20">
+            <div class="section-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                <h3 class="text-3xl font-bold tracking-tight">Publications & Conferences</h3>
+            </div>
+            <div class="space-y-6 max-w-4xl mx-auto">
+                <div class="glass-effect p-6 rounded-xl">
+                    <p class="font-semibold text-slate-200">Khan, M. T. H., et al. (2025, February). <span class="text-green-400">Automated irrigation for rice fields: A sustainable solution...</span> [Conference poster]. 1st International Conference on Agricultural Machinery and Bioresource Engineering (ICAMBE).</p>
+                </div>
+                <div class="glass-effect p-6 rounded-xl">
+                    <p class="font-semibold text-slate-200">Hasan, M. A., et al. (2024). <span class="text-green-400">Technical evaluation of low-head drip irrigation system.</span> Global Research in Environment and Sustainability, 2(1), 19-28.</p>
+                </div>
+                 <div class="glass-effect p-6 rounded-xl">
+                    <p class="font-semibold text-slate-200">Hassan, R., et al. (2020). <span class="text-green-400">Prediction of Epidemics Trend of COVID-19 in Bangladesh.</span> Frontiers in Public Health, 8.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20">
+             <div class="section-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                <h3 class="text-3xl font-bold tracking-tight">Technical Skills</h3>
+            </div>
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-8">
+                    <h4 class="font-semibold text-lg text-green-300 mb-4 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>Programming & Development</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">Python</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">C/C++</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">R</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">LaTeX</span>
+                    </div>
+                </div>
+                <div class="mb-8">
+                    <h4 class="font-semibold text-lg text-green-300 mb-4 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>IoT & Embedded Platforms</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">Arduino IDE</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">Blynk</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">ESP8266/ESP32</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">ESP-NOW</span>
+                    </div>
+                </div>
+                 <div class="mb-8">
+                    <h4 class="font-semibold text-lg text-green-300 mb-4 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>Data & Design</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">MS Excel</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">GraphPad Prism</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">Fusion 30</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">Adobe Creative Suite</span>
+                         <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">Cinema4D</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Education Section -->
+        <section id="education" class="py-20">
+            <div class="section-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.42 10.72l-9-4.5a1 1 0 0 0-.84 0l-9 4.5a1 1 0 0 0 0 1.79l9 4.5a1 1 0 0 0 .84 0l9-4.5a1 1 0 0 0 0-1.79Z"/>
+                    <path d="M12 22V12"/>
+                </svg>
+                <h3 class="text-3xl font-bold text-center tracking-tight">Education</h3>
+            </div>
+            <div class="max-w-4xl mx-auto">
+                <div class="glass-effect p-6 rounded-2xl">
+                     <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-2 sm:gap-0">
+                        <h4 class="font-bold text-xl text-green-300">Bachelor of Science in Agricultural Engineering</h4>
+                        <span class="text-sm text-slate-400">Jan 2017 - Aug 2024</span>
+                    </div>
+                    <p class="text-md font-medium text-slate-200 mb-4">Bangladesh Agricultural University (BAU), Mymensingh</p>
+                    <ul class="list-disc list-inside text-slate-300">
+                        <li>Major: Farm Power and Machinery</li>
+                        <li>Thesis: Design and Development of a Microcontroller-Based Automated Irrigation for Rice Field</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Contact Section -->
+        <footer id="contact" class="py-20 text-center">
+             <h3 class="text-3xl font-bold text-center mb-6 tracking-tight">Get In Touch</h3>
+             <p class="text-slate-300 mb-8">I'm currently seeking MS/PhD opportunities to advance innovations in smart, sustainable, and resource-efficient agriculture. <br/> Let's connect!</p>
+             <a href="mailto:tahmidxp96@gmail.com" class="text-xl font-semibold text-green-400 hover:text-green-500 transition-colors inline-flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                tahmidxp96@gmail.com
+             </a>
+             <div class="flex justify-center space-x-6 mt-8">
+                <a href="https://www.linkedin.com/in/tahmid-hassan-khan/" target="_blank" class="text-slate-400 hover:text-green-400 transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
+                </a>
+             </div>
+             <p class="text-xs text-slate-500 mt-12">&copy; 2025 Md. Tahmid Hassan Khan. All Rights Reserved.</p>
+        </footer>
+
+    </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const homepage = document.getElementById('homepage');
-            const portfolioPage = document.getElementById('portfolio-page');
-            const cursorDot = document.querySelector('.cursor-dot');
-            const cursorOutline = document.querySelector('.cursor-outline');
-            
-            // --- Minimalist Homepage Particle Effects ---
-            function createParticles(containerId, colors, count) {
-                const container = document.getElementById(containerId);
-                if (!container) return;
-                for (let i = 0; i < count; i++) {
-                    const particle = document.createElement('div');
-                    const size = Math.random() * 5 + 1;
-                    particle.className = 'particle';
-                    particle.style.width = `${size}px`;
-                    particle.style.height = `${size}px`;
-                    particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    particle.style.left = `${Math.random() * 100}%`;
-                    particle.style.bottom = '0';
-                    particle.style.animationDuration = `${Math.random() * 20 + 10}s`; // 10 to 30 seconds
-                    particle.style.animationDelay = `${Math.random() * 10}s`;
-                    container.appendChild(particle);
-                }
-            }
-            createParticles('acad-particles', ['rgba(85, 107, 47, 0.4)', 'rgba(107, 142, 35, 0.4)'], 30);
-            createParticles('corp-particles', ['rgba(94, 129, 172, 0.4)', 'rgba(129, 161, 193, 0.4)'], 30);
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
 
-
-            // --- Data for accordions ---
-            const researchData = [
-                { title: 'Prediction of Epidemics Trend of COVID-19', journal: 'Frontiers in Public Health (2020)', image: 'https://placehold.co/600x400/F59E0B/FFFFFF?text=COVID-19+Research', details: 'Contributed to a predictive model analyzing the trend of the COVID-19 epidemic in Bangladesh, utilizing statistical methods to forecast its spread.' },
-                { title: 'Technical Evaluation of Low-Head Drip Irrigation', journal: 'Global Research in Environment and Sustainability (2024)', image: 'https://placehold.co/600x400/76A9FA/FFFFFF?text=Irrigation+System', details: 'Conducted a technical assessment of a low-head drip irrigation system to evaluate its efficiency, water distribution uniformity, and suitability for small-scale farming.' },
-                { title: 'Automated Irrigation for Rice Fields', journal: 'ICAMBE Conference (2025)', image: 'https://placehold.co/600x400/45B39D/FFFFFF?text=Smart+Farming', details: 'Presented a poster on the design and implementation of a sustainable, automated irrigation solution for rice fields to enhance water management efficiency.' }
-            ];
-            const trainingData = [
-                { title: 'Industrial Training Attachment', provider: 'BARI', image: 'https://placehold.co/600x400/5DADE2/FFFFFF?text=Industrial+Training', details: 'Completed an industrial attachment focusing on farm machinery and post-harvest process engineering.' },
-                { title: 'Rice Transplanter & Combine Harvester Operation', provider: 'Dept. of Agricultural Extension', image: 'https://placehold.co/600x400/AF7AC5/FFFFFF?text=Machinery+Training', details: 'Received hands-on training on the operation, repair, and maintenance of modern agricultural machinery.' },
-                { title: 'Global Postharvest Loss Prevention', provider: 'Coursera - University of Illinois', image: 'https://placehold.co/600x400/F4D03F/FFFFFF?text=Online+Course', details: 'Completed an online course covering fundamentals, technologies, and key actors in preventing postharvest loss globally.' }
-            ];
-
-            // --- Accordion Builder ---
-            function buildAccordion(containerId, data) {
-                const container = document.getElementById(containerId);
-                container.innerHTML = data.map((item, index) => `
-                    <div class="accordion-item interactive-card bg-white/20 p-4 rounded-2xl">
-                        <div class="accordion-header flex justify-between items-center cursor-pointer">
-                            <h3 class="text-lg font-semibold">${item.title}</h3>
-                            <i class="fas fa-plus accordion-icon transition-transform duration-300"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="md:flex md:space-x-6 items-center">
-                                <img src="${item.image}" alt="${item.title}" class="w-full md:w-1/3 h-40 object-cover rounded-lg mb-4 md:mb-0">
-                                <div>
-                                    <p class="font-medium italic opacity-80 mb-2">${item.provider || item.journal}</p>
-                                    <p>${item.details}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-            }
-            buildAccordion('research-accordion', researchData);
-            buildAccordion('training-accordion', trainingData);
-            document.querySelectorAll('.accordion-header').forEach(header => {
-                header.addEventListener('click', () => {
-                    header.parentElement.classList.toggle('active');
-                });
-            });
-
-
-            // --- Parallax & 3D Tilt Effect ---
-            const portfolioPageEl = document.getElementById('portfolio-page');
-            const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-
-            if (!isTouchDevice) {
-                portfolioPageEl.addEventListener('mousemove', e => {
-                    document.querySelectorAll('.interactive-card').forEach(card => {
-                        const rect = card.getBoundingClientRect();
-                        const x = e.clientX - rect.left;
-                        const y = e.clientY - rect.top;
-                        const { width, height } = rect;
-                        
-                        let rotateX = (y / height - 0.5) * -7; 
-                        let rotateY = (x / width - 0.5) * 7;   
-
-                        rotateX = Math.max(-5, Math.min(5, rotateX));
-                        rotateY = Math.max(-5, Math.min(5, rotateY));
-
-                        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                    });
-                });
-
-                portfolioPageEl.addEventListener('mouseleave', () => {
-                     document.querySelectorAll('.interactive-card').forEach(card => {
-                        card.style.transform = 'rotateX(0) rotateY(0)';
-                     });
-                });
-            }
-            
-            // --- Custom Cursor Logic ---
-            window.addEventListener('mousemove', (e) => {
-                const posX = e.clientX;
-                const posY = e.clientY;
-                cursorDot.style.left = `${posX}px`;
-                cursorDot.style.top = `${posY}px`;
-                cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: 'forwards' });
-            });
-            
-            document.querySelectorAll('a, button, .cursor-pointer').forEach(el => {
-                el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover'));
-                el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
-            });
-
-            // --- Background Icons ---
-            function createFloatingIcons() {
-                const corpIcons = ['fa-industry', 'fa-cogs', 'fa-check-circle', 'fa-chart-line', 'fa-microchip', 'fa-ruler-combined'];
-                const acadIcons = ['fa-flask', 'fa-tractor', 'fa-seedling', 'fa-dna', 'fa-book-open', 'fa-atom'];
-                const corpContainer = document.getElementById('corp-icons');
-                const acadContainer = document.getElementById('acad-icons');
-
-                const createIcons = (container, iconList) => {
-                    for(let i = 0; i < 10; i++) {
-                        const icon = document.createElement('i');
-                        const chosenIcon = iconList[Math.floor(Math.random() * iconList.length)];
-                        icon.className = `fas ${chosenIcon} floating-icon`;
-                        icon.style.left = `${Math.random() * 100}vw`;
-                        icon.style.fontSize = `${Math.random() * 4 + 2}rem`;
-                        icon.style.animationDuration = `${Math.random() * 15 + 10}s`;
-                        icon.style.animationDelay = `${Math.random() * 10}s`;
-                        container.appendChild(icon);
-                    }
-                };
-                createIcons(corpContainer, corpIcons);
-                createIcons(acadContainer, acadIcons);
-            }
-            createFloatingIcons();
-
-
-            // --- Homepage & Page Navigation Logic ---
-            function showPortfolio(mode) {
-                homepage.style.display = 'none';
-                portfolioPage.style.display = 'block';
-                const isAcademic = mode === 'academics';
-                document.body.classList.toggle('academic-theme', isAcademic);
-                document.getElementById('theme-checkbox').checked = isAcademic;
-                document.getElementById('mobile-theme-checkbox').checked = isAcademic;
-                updateActiveSection();
-                initActiveSlider();
-                setTimeout(() => {
-                    window.scrollTo(0,0);
-                    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-                }, 50);
-            }
-            
-            document.querySelectorAll('.enter-portfolio-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => showPortfolio(e.currentTarget.dataset.mode));
-            });
-
-            document.getElementById('home-link').addEventListener('click', (e) => {
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                portfolioPage.style.display = 'none';
-                homepage.style.display = 'flex';
-            });
-            
-            // --- Theme Switchers ---
-            function setCursorTheme(isAcademic) {
-                 if(isAcademic) {
-                    cursorDot.classList.add('dark');
-                    cursorOutline.classList.add('dark');
-                } else {
-                    cursorDot.classList.remove('dark');
-                    cursorOutline.classList.remove('dark');
-                }
-            }
-
-            function handleThemeChange(isAcademic) {
-                document.body.classList.toggle('academic-theme', isAcademic);
-                setCursorTheme(isAcademic);
-                document.getElementById('theme-checkbox').checked = isAcademic;
-                document.getElementById('mobile-theme-checkbox').checked = isAcademic;
-                updateActiveSection();
-                initActiveSlider();
-            }
-            document.getElementById('theme-checkbox').addEventListener('change', (e) => handleThemeChange(e.target.checked));
-            document.getElementById('mobile-theme-checkbox').addEventListener('change', (e) => handleThemeChange(e.target.checked));
-            
-            const homepageTitle = document.getElementById('homepage-title');
-            const homepageSubtitle = document.getElementById('homepage-subtitle');
-            const exploreBtn = document.getElementById('explore-btn');
-            
-            document.getElementById('homepage-theme-checkbox').addEventListener('change', function() {
-                const isCorporate = this.checked;
-                document.getElementById('acad-homepage-bg').style.opacity = isCorporate ? '0' : '1';
-                document.getElementById('corp-homepage-bg').style.opacity = isCorporate ? '1' : '0';
-                setCursorTheme(!isCorporate);
-                
-                // Update text and colors
-                if (isCorporate) {
-                    homepageTitle.style.color = '#eceff4';
-                    homepageSubtitle.style.color = '#d8dee9';
-                    homepageSubtitle.textContent = 'Automation & Mechanization Specialist';
-                    exploreBtn.style.backgroundColor = '#5e81ac';
-                    exploreBtn.dataset.mode = 'corporate';
-                } else {
-                    homepageTitle.style.color = '#2e3440';
-                    homepageSubtitle.style.color = '#4c566a';
-                    homepageSubtitle.textContent = 'Agricultural Engineer | Researcher';
-                    exploreBtn.style.backgroundColor = '#556b2f';
-                    exploreBtn.dataset.mode = 'academics';
-                }
-
-                document.getElementById('mode-label-left').style.opacity = isCorporate ? '0.5' : '1';
-                document.getElementById('mode-label-right').style.opacity = isCorporate ? '1' : '0.5';
-            });
-
-            function updateActiveSection() {
-                const isAcademic = document.body.classList.contains('academic-theme');
-                document.getElementById('academics').classList.toggle('active', isAcademic);
-                document.getElementById('corporate').classList.toggle('active', !isAcademic);
-            }
-
-            // --- Intersection Observer for Animations ---
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
                 });
-            }, { threshold: 0.1 });
-
-            // --- Slider Logic ---
-            let slidersInitialized = {};
-            function initSlider(sliderId) {
-                if (slidersInitialized[sliderId]) return;
-                const slider = document.getElementById(sliderId);
-                if (!slider || !slider.offsetParent) return;
-                const track = slider.querySelector('.slider-track');
-                const items = slider.querySelectorAll('.slider-item');
-                if (items.length === 0) return;
-
-                const nextBtn = slider.parentElement.querySelector('.slider-next');
-                const prevBtn = slider.parentElement.querySelector('.slider-prev');
-                let currentIndex = 0;
-                function updateSlider() { track.style.transform = `translateX(-${currentIndex * slider.getBoundingClientRect().width}px)`; }
-                nextBtn.addEventListener('click', () => { currentIndex = (currentIndex + 1) % items.length; updateSlider(); });
-                prevBtn.addEventListener('click', () => { currentIndex = (currentIndex - 1 + items.length) % items.length; updateSlider(); });
-                
-                new ResizeObserver(updateSlider).observe(slider);
-                slidersInitialized[sliderId] = true;
-            }
-            
-            function initActiveSlider() {
-                setTimeout(() => {
-                    if (document.getElementById('corporate').classList.contains('active')) initSlider('corp-work-slider');
-                }, 100);
-            }
-
-            // --- Hamburger Menu ---
-            const menuBtn = document.getElementById('menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            menuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('open');
-                menuBtn.innerHTML = mobileMenu.classList.contains('open') ? '<i class="fas fa-times fa-2x"></i>' : '<i class="fas fa-bars fa-2x"></i>';
+                // Close mobile menu on link click
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
             });
-
-            // --- Dynamic CSS for Switchers ---
-            const style = document.createElement('style');
-            style.innerHTML = `
-                input:checked + span { background-color: var(--acad-accent); } 
-                body:not(.academic-theme) input:not(:checked) + span { background-color: var(--corp-accent); } 
-                input:checked + span:before { transform: translateX(24px); }
-                #homepage-theme-checkbox:checked + .slider-bg { background-color: rgba(94, 129, 172, 0.5) !important; }
-                #homepage-theme-checkbox:not(:checked) + .slider-bg { background-color: rgba(85, 107, 47, 0.5) !important; }
-            `;
-            document.head.appendChild(style);
-            
-            // Set initial theme
-            document.getElementById('homepage-theme-checkbox').checked = false;
-            document.body.classList.add('academic-theme');
-            setCursorTheme(true); // Initial cursor theme
         });
     </script>
+
 </body>
 </html>
 
