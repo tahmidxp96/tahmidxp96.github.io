@@ -6,55 +6,90 @@
     <title>Md. Tahmid Hassan Khan | Interactive Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0;700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --corp-bg-start: #6DD5FA; --corp-bg-end: #2980B9;
-            --acad-bg-start: #FFDAB9; --acad-bg-end: #E6A4B4;
-            --corp-text: #111827; --acad-text: #5D4037;
+            /* Corporate (Blue) Theme */
+            --corp-bg-start: #5e81ac;
+            --corp-bg-end: #81a1c1;
+            --corp-text: #eceff4;
+            --corp-accent: #88c0d0;
+
+            /* Academic (Green) Theme */
+            --acad-bg-start: #a3be8c;
+            --acad-bg-end: #c5e4a5;
+            --acad-text: #2e3440;
+            --acad-accent: #8fbcbb;
         }
+
+        /* --- Custom Cursor --- */
+        body { cursor: none; }
+        .cursor-dot, .cursor-outline {
+            pointer-events: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            border-radius: 50%; z-index: 9999; opacity: 0; transition: opacity 0.3s ease-in-out, transform 0.2s ease-in-out, background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .cursor-dot { width: 8px; height: 8px; background-color: #fff; }
+        .cursor-outline { width: 40px; height: 40px; border: 2px solid rgba(255, 255, 255, 0.5); }
+        .cursor-dot.dark { background-color: #2e3440; }
+        .cursor-outline.dark { border-color: rgba(46, 52, 64, 0.5); }
+        body:hover .cursor-dot, body:hover .cursor-outline { opacity: 1; }
+        .cursor-outline.hover { transform: translate(-50%, -50%) scale(1.5); border-color: rgba(255, 255, 255, 0.8); }
+        .cursor-outline.dark.hover { border-color: rgba(46, 52, 64, 0.8); }
+
 
         /* --- Glassmorphism & Themes --- */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 1.5rem;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 1.5rem; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
         }
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(45deg, var(--corp-bg-start), var(--corp-bg-end));
-            color: var(--corp-text);
-            background-size: 200% 200%;
-            animation: gradient-animation 15s ease infinite;
+            font-family: 'Inter', sans-serif; background: linear-gradient(45deg, var(--corp-bg-start), var(--corp-bg-end));
+            color: var(--corp-text); background-size: 200% 200%; animation: gradient-animation 15s ease infinite;
         }
         body.academic-theme {
-            font-family: 'Lora', serif;
-            background: linear-gradient(45deg, var(--acad-bg-start), var(--acad-bg-end));
-            background-size: 200% 200%;
-            animation: gradient-animation 15s ease infinite;
-            color: var(--acad-text);
+            font-family: 'Lora', serif; background: linear-gradient(45deg, var(--acad-bg-start), var(--acad-bg-end));
+            background-size: 200% 200%; animation: gradient-animation 15s ease infinite; color: var(--acad-text);
         }
         
-        /* --- Animations --- */
-        @keyframes gradient-animation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* --- Homepage Animations --- */
+        @keyframes gradient-animation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes particle-float {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
         }
-        @keyframes draw { to { stroke-dashoffset: 0; } }
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes button-pulse { 0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(0,0,0,0.2); } 50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(0,0,0,0.4); } }
+        @keyframes float { 0% { transform: translateY(105vh) rotate(0deg); opacity: 0; } 10%, 90% { opacity: 1; } 100% { transform: translateY(-5vh) rotate(360deg); opacity: 0; } }
         
         .homepage-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity 1s ease-in-out; }
+        .particle { position: absolute; border-radius: 50%; animation-name: particle-float; animation-timing-function: linear; animation-iteration-count: infinite; }
         .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
-        /* --- 3D Hover & Parallax --- */
-        .interactive-card { transition: transform 0.1s linear; transform-style: preserve-3d; }
-        .parallax-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.5; }
+        /* --- Theme-specific elements --- */
+        .theme-label {
+            font-weight: 600;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            color: var(--corp-text);
+        }
+        body.academic-theme .theme-label {
+            color: var(--acad-text);
+        }
+        .company-name { color: var(--corp-accent); }
+        body.academic-theme .company-name { color: #556b2f; }
 
+
+        /* --- Background Icons --- */
+        .icon-bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        .icon-bg-container .floating-icon { position: absolute; animation: float 20s infinite linear; }
+        #corp-icons .floating-icon { color: rgba(236, 239, 244, 0.08); }
+        #acad-icons .floating-icon { color: rgba(46, 52, 64, 0.05); }
+        #corp-icons, #acad-icons { display: none; }
+        body:not(.academic-theme) #corp-icons { display: block; }
+        body.academic-theme #acad-icons { display: block; }
+
+        /* --- 3D Hover & Parallax --- */
+        .interactive-card { transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); transform-style: preserve-3d; }
+        
         /* --- Accordion --- */
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out, padding 0.5s ease-out; }
         .accordion-item.active .accordion-content { max-height: 500px; padding-top: 1rem; padding-bottom: 1rem; }
@@ -72,54 +107,64 @@
         .section.active { display: block; }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased academic-theme">
+    <div class="cursor-dot dark"></div>
+    <div class="cursor-outline dark"></div>
 
     <!-- Homepage -->
-    <div id="homepage" class="relative w-screen h-screen overflow-hidden flex flex-col justify-center items-center text-white transition-colors duration-1000" style="background-color: #0c3c26;">
-        <div id="acad-background" class="homepage-bg opacity-100">
-             <svg width="100%" height="100%" class="absolute top-0 left-0"><defs><pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M 80 0 L 0 0 0 80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#grid)" /><g stroke="rgba(255,255,255,0.2)" stroke-width="2" fill="none"><path d="M -400 100 Q -200 150 0 100 T 400 150 T 800 100 T 1200 150 T 1600 100 T 2000 150" stroke-dasharray="2000" stroke-dashoffset="2000" style="animation: draw 20s linear infinite;"></path><path d="M -400 200 Q -200 250 0 200 T 400 250 T 800 200 T 1200 250 T 1600 200 T 2000 250" stroke-dasharray="2000" stroke-dashoffset="2000" style="animation: draw 25s linear infinite; animation-delay: -5s;"></path></g></svg>
+    <div id="homepage" class="relative w-screen h-screen overflow-hidden flex flex-col justify-center items-center">
+        <!-- Academic Scene -->
+        <div id="acad-homepage-bg" class="homepage-bg opacity-100" style="background: #e8f5e9;">
+            <div id="acad-particles" class="absolute top-0 left-0 w-full h-full"></div>
         </div>
-        <div id="corp-background" class="homepage-bg opacity-0" style="background-color: #1f2937;">
-             <svg width="100%" height="100%" class="absolute top-0 left-0"><g fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="8"><circle cx="20vw" cy="30vh" r="100" stroke-dasharray="20 15" style="animation: rotate 20s linear infinite; transform-origin: 20vw 30vh;"></circle><circle cx="50vw" cy="65vh" r="150" stroke-dasharray="30 20" style="animation: rotate 30s linear infinite reverse; transform-origin: 50vw 65vh;"></circle></g></svg>
+        <!-- Corporate Scene -->
+        <div id="corp-homepage-bg" class="homepage-bg opacity-0" style="background-color: #3b4252;">
+            <div id="corp-particles" class="absolute top-0 left-0 w-full h-full"></div>
+        </div>
+        
+        <!-- Center Content -->
+        <div class="z-10 text-center flex flex-col items-center p-4 sm:p-8 mb-28 sm:mb-24">
+            <img src="https://placehold.co/128x128/FFFFFF/333333?text=THK" alt="Md. Tahmid Hassan Khan" class="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-black/10 mb-6 shadow-2xl">
+            <h1 id="homepage-title" class="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight transition-colors duration-500" style="color: #2e3440;">Md. Tahmid Hassan Khan</h1>
+            <p id="homepage-subtitle" class="mt-4 text-lg sm:text-xl md:text-2xl transition-colors duration-500" style="color: #4c566a;">Agricultural Engineer | Researcher</p>
+            <button id="explore-btn" data-mode="academics" class="enter-portfolio-btn mt-8 px-8 py-3 md:px-10 md:py-4 font-bold rounded-full transition-all duration-300 transform hover:scale-105 text-white" style="background-color: #556b2f; animation: button-pulse 2.5s infinite;">Explore Portfolio</button>
         </div>
 
-        <div class="z-10 text-center p-8 glass-panel">
-            <h1 class="text-4xl md:text-7xl font-bold tracking-wider">Md. Tahmid Hassan Khan</h1>
-            <p id="homepage-subtitle" class="mt-2 text-lg transition-opacity duration-500">Agricultural Engineer | Researcher</p>
-            <button id="explore-btn" data-mode="academics" class="enter-portfolio-btn mt-8 px-8 py-3 bg-yellow-500 font-bold rounded-full hover:bg-yellow-600 transition-all duration-300 transform hover:scale-105">Explore</button>
-        </div>
+        <!-- Switcher -->
         <div class="absolute bottom-10 z-10 p-4 glass-panel">
              <div class="flex items-center space-x-4">
-                <span id="mode-label-left" class="font-semibold transition-opacity duration-500 opacity-50">Academics</span>
+                <span id="mode-label-left" class="theme-label transition-opacity duration-500 opacity-100">Academics</span>
                 <label class="relative inline-block w-14 h-8">
                     <input type="checkbox" id="homepage-theme-checkbox" class="opacity-0 w-0 h-0"/>
                     <span class="slider-bg absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-gray-600/50 rounded-full transition-colors duration-300 before:absolute before:h-6 before:w-6 before:left-1 before:bottom-1 before:bg-white before:rounded-full before:transition-transform before:duration-300"></span>
                 </label>
-                <span id="mode-label-right" class="font-semibold transition-opacity duration-500 opacity-100">Corporate</span>
+                <span id="mode-label-right" class="theme-label transition-opacity duration-500 opacity-50">Corporate</span>
              </div>
         </div>
     </div>
 
     <!-- Main Portfolio Page -->
     <div id="portfolio-page" class="relative">
-        <div class="parallax-bg"></div>
+        <div class="icon-bg-container" id="corp-icons"></div>
+        <div class="icon-bg-container" id="acad-icons"></div>
+
         <header class="sticky top-0 z-50 p-4">
              <div class="container mx-auto glass-panel p-4 flex justify-between items-center">
                 <a href="#" id="home-link" class="text-xl font-bold">Tahmid H. Khan</a>
                 <nav class="hidden md:flex items-center space-x-4">
-                     <span class="font-semibold">Corporate</span>
+                     <span class="theme-label">Corporate</span>
                      <label class="relative inline-block w-14 h-8"><input type="checkbox" id="theme-checkbox" class="opacity-0 w-0 h-0"/><span class="absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-gray-300 rounded-full transition-colors duration-300 before:absolute before:h-6 before:w-6 before:left-1 before:bottom-1 before:bg-white before:rounded-full before:transition-transform before:duration-300"></span></label>
-                     <span class="font-semibold">Academics</span>
+                     <span class="theme-label">Academics</span>
                 </nav>
                 <button id="menu-btn" class="md:hidden z-50"><i class="fas fa-bars fa-2x"></i></button>
              </div>
         </header>
         
-        <div id="mobile-menu" class="fixed top-0 right-0 h-full w-64 glass-panel z-40 pt-24 p-6 md:hidden">
+        <div id="mobile-menu" class="fixed top-0 right-0 h-full w-64 glass-panel z-40 pt-24 p-6 md-hidden">
             <div class="flex flex-col items-center space-y-6">
-                <span class="font-semibold">Corporate</span>
+                <span class="theme-label">Corporate</span>
                 <label class="relative inline-block w-14 h-8"><input type="checkbox" id="mobile-theme-checkbox" class="opacity-0 w-0 h-0"/><span class="absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-gray-300 rounded-full transition-colors duration-300 before:absolute before:h-6 before:w-6 before:left-1 before:bottom-1 before:bg-white before:rounded-full before:transition-transform before:duration-300"></span></label>
-                <span class="font-semibold">Academics</span>
+                <span class="theme-label">Academics</span>
             </div>
         </div>
 
@@ -131,16 +176,16 @@
                         <h2 class="text-2xl font-bold mb-4">About Me</h2>
                         <p>An agricultural engineer specializing in automation and mechanization. Expert in precision farming, sensor technologies, and data-driven decision-making. Passionate about leveraging technology to enhance agricultural efficiency and sustainability.</p>
                     </div>
-                    <div class="glass-panel p-6 mb-8 reveal">
+                    <div class="glass-panel p-6 mb-8 reveal relative">
                         <h2 class="text-2xl font-bold mb-4 text-center">Work Experience</h2>
-                        <div id="corp-work-slider" class="slider-container relative">
+                        <div id="corp-work-slider" class="slider-container">
                             <div class="slider-track">
-                                <div class="slider-item p-4"><div class="interactive-card bg-white/30 p-6 rounded-2xl overflow-hidden md:flex md:space-x-6"><img src="https://placehold.co/600x400/3B82F6/FFFFFF?text=BAT" alt="Work at BAT" class="w-full md:w-1/3 h-48 object-cover rounded-lg"><div class="mt-4 md:mt-0"><h3 class="text-xl font-semibold">Leaf Quality Officer</h3><p class="font-medium text-blue-800">British American Tobacco</p><p class="opacity-70">Aug 2024 - Present</p></div></div></div>
-                                <div class="slider-item p-4"><div class="interactive-card bg-white/30 p-6 rounded-2xl overflow-hidden md:flex md:space-x-6"><img src="https://placehold.co/600x400/10B981/FFFFFF?text=BINA" alt="Work at BINA" class="w-full md:w-1/3 h-48 object-cover rounded-lg"><div class="mt-4 md:mt-0"><h3 class="text-xl font-semibold">Research Fellow</h3><p class="font-medium text-blue-800">Bangladesh Institute of Nuclear Agriculture</p><p class="opacity-70">Oct 2021 - Jul 2024</p></div></div></div>
+                                <div class="slider-item p-4"><div class="interactive-card bg-slate-900/30 backdrop-blur-sm p-6 rounded-2xl overflow-hidden md:flex md:space-x-6"><img src="https://placehold.co/600x400/3B82F6/FFFFFF?text=BAT" alt="Work at BAT" class="w-full md:w-1/3 h-48 object-cover rounded-lg"><div class="mt-4 md:mt-0"><h3 class="text-xl font-semibold">Leaf Quality Officer</h3><p class="font-medium company-name">British American Tobacco</p><p class="opacity-70">Aug 2024 - Present</p></div></div></div>
+                                <div class="slider-item p-4"><div class="interactive-card bg-slate-900/30 backdrop-blur-sm p-6 rounded-2xl overflow-hidden md:flex md:space-x-6"><img src="https://placehold.co/600x400/10B981/FFFFFF?text=BINA" alt="Work at BINA" class="w-full md:w-1/3 h-48 object-cover rounded-lg"><div class="mt-4 md:mt-0"><h3 class="text-xl font-semibold">Research Fellow</h3><p class="font-medium company-name">Bangladesh Institute of Nuclear Agriculture</p><p class="opacity-70">Oct 2021 - Jul 2024</p></div></div></div>
                             </div>
-                            <button class="slider-prev absolute top-1/2 left-0 md:-left-4 transform -translate-y-1/2 bg-white/50 p-2 rounded-full shadow-md hover:bg-white/80"><i class="fas fa-chevron-left"></i></button>
-                            <button class="slider-next absolute top-1/2 right-0 md:-right-4 transform -translate-y-1/2 bg-white/50 p-2 rounded-full shadow-md hover:bg-white/80"><i class="fas fa-chevron-right"></i></button>
                         </div>
+                        <button class="slider-prev absolute top-1/2 left-2 transform -translate-y-1/2 bg-white/50 p-2 rounded-full shadow-md hover:bg-white/80 z-10"><i class="fas fa-chevron-left"></i></button>
+                        <button class="slider-next absolute top-1/2 right-2 transform -translate-y-1/2 bg-white/50 p-2 rounded-full shadow-md hover:bg-white/80 z-10"><i class="fas fa-chevron-right"></i></button>
                     </div>
                 </section>
                 
@@ -183,8 +228,31 @@
         document.addEventListener('DOMContentLoaded', function() {
             const homepage = document.getElementById('homepage');
             const portfolioPage = document.getElementById('portfolio-page');
-            const exploreBtn = document.getElementById('explore-btn');
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
             
+            // --- Minimalist Homepage Particle Effects ---
+            function createParticles(containerId, colors, count) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                for (let i = 0; i < count; i++) {
+                    const particle = document.createElement('div');
+                    const size = Math.random() * 5 + 1;
+                    particle.className = 'particle';
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.left = `${Math.random() * 100}%`;
+                    particle.style.bottom = '0';
+                    particle.style.animationDuration = `${Math.random() * 20 + 10}s`; // 10 to 30 seconds
+                    particle.style.animationDelay = `${Math.random() * 10}s`;
+                    container.appendChild(particle);
+                }
+            }
+            createParticles('acad-particles', ['rgba(85, 107, 47, 0.4)', 'rgba(107, 142, 35, 0.4)'], 30);
+            createParticles('corp-particles', ['rgba(94, 129, 172, 0.4)', 'rgba(129, 161, 193, 0.4)'], 30);
+
+
             // --- Data for accordions ---
             const researchData = [
                 { title: 'Prediction of Epidemics Trend of COVID-19', journal: 'Frontiers in Public Health (2020)', image: 'https://placehold.co/600x400/F59E0B/FFFFFF?text=COVID-19+Research', details: 'Contributed to a predictive model analyzing the trend of the COVID-19 epidemic in Bangladesh, utilizing statistical methods to forecast its spread.' },
@@ -228,27 +296,72 @@
 
 
             // --- Parallax & 3D Tilt Effect ---
-            const portfolioContainer = document.querySelector('#portfolio-page .container');
-            portfolioContainer.addEventListener('mousemove', e => {
-                document.querySelectorAll('.interactive-card').forEach(card => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const { width, height } = rect;
-                    const rotateX = (y / height - 0.5) * -15; // Max 7.5 deg tilt
-                    const rotateY = (x / width - 0.5) * 15;  // Max 7.5 deg tilt
-                    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            const portfolioPageEl = document.getElementById('portfolio-page');
+            const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+            if (!isTouchDevice) {
+                portfolioPageEl.addEventListener('mousemove', e => {
+                    document.querySelectorAll('.interactive-card').forEach(card => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        const { width, height } = rect;
+                        
+                        let rotateX = (y / height - 0.5) * -7; 
+                        let rotateY = (x / width - 0.5) * 7;   
+
+                        rotateX = Math.max(-5, Math.min(5, rotateX));
+                        rotateY = Math.max(-5, Math.min(5, rotateY));
+
+                        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                    });
                 });
+
+                portfolioPageEl.addEventListener('mouseleave', () => {
+                     document.querySelectorAll('.interactive-card').forEach(card => {
+                        card.style.transform = 'rotateX(0) rotateY(0)';
+                     });
+                });
+            }
+            
+            // --- Custom Cursor Logic ---
+            window.addEventListener('mousemove', (e) => {
+                const posX = e.clientX;
+                const posY = e.clientY;
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+                cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: 'forwards' });
             });
-            portfolioContainer.addEventListener('mouseleave', () => {
-                 document.querySelectorAll('.interactive-card').forEach(card => {
-                    card.style.transform = `rotateX(0) rotateY(0)`;
-                 });
+            
+            document.querySelectorAll('a, button, .cursor-pointer').forEach(el => {
+                el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
             });
-            window.addEventListener('scroll', () => {
-                const parallaxBg = document.querySelector('.parallax-bg');
-                parallaxBg.style.transform = `translateY(${window.scrollY * 0.3}px)`;
-            });
+
+            // --- Background Icons ---
+            function createFloatingIcons() {
+                const corpIcons = ['fa-industry', 'fa-cogs', 'fa-check-circle', 'fa-chart-line', 'fa-microchip', 'fa-ruler-combined'];
+                const acadIcons = ['fa-flask', 'fa-tractor', 'fa-seedling', 'fa-dna', 'fa-book-open', 'fa-atom'];
+                const corpContainer = document.getElementById('corp-icons');
+                const acadContainer = document.getElementById('acad-icons');
+
+                const createIcons = (container, iconList) => {
+                    for(let i = 0; i < 10; i++) {
+                        const icon = document.createElement('i');
+                        const chosenIcon = iconList[Math.floor(Math.random() * iconList.length)];
+                        icon.className = `fas ${chosenIcon} floating-icon`;
+                        icon.style.left = `${Math.random() * 100}vw`;
+                        icon.style.fontSize = `${Math.random() * 4 + 2}rem`;
+                        icon.style.animationDuration = `${Math.random() * 15 + 10}s`;
+                        icon.style.animationDelay = `${Math.random() * 10}s`;
+                        container.appendChild(icon);
+                    }
+                };
+                createIcons(corpContainer, corpIcons);
+                createIcons(acadContainer, acadIcons);
+            }
+            createFloatingIcons();
+
 
             // --- Homepage & Page Navigation Logic ---
             function showPortfolio(mode) {
@@ -261,10 +374,15 @@
                 updateActiveSection();
                 initActiveSlider();
                 setTimeout(() => {
+                    window.scrollTo(0,0);
                     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
                 }, 50);
             }
-            exploreBtn.addEventListener('click', () => showPortfolio(exploreBtn.dataset.mode));
+            
+            document.querySelectorAll('.enter-portfolio-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => showPortfolio(e.currentTarget.dataset.mode));
+            });
+
             document.getElementById('home-link').addEventListener('click', (e) => {
                 e.preventDefault();
                 portfolioPage.style.display = 'none';
@@ -272,8 +390,19 @@
             });
             
             // --- Theme Switchers ---
+            function setCursorTheme(isAcademic) {
+                 if(isAcademic) {
+                    cursorDot.classList.add('dark');
+                    cursorOutline.classList.add('dark');
+                } else {
+                    cursorDot.classList.remove('dark');
+                    cursorOutline.classList.remove('dark');
+                }
+            }
+
             function handleThemeChange(isAcademic) {
                 document.body.classList.toggle('academic-theme', isAcademic);
+                setCursorTheme(isAcademic);
                 document.getElementById('theme-checkbox').checked = isAcademic;
                 document.getElementById('mobile-theme-checkbox').checked = isAcademic;
                 updateActiveSection();
@@ -281,18 +410,35 @@
             }
             document.getElementById('theme-checkbox').addEventListener('change', (e) => handleThemeChange(e.target.checked));
             document.getElementById('mobile-theme-checkbox').addEventListener('change', (e) => handleThemeChange(e.target.checked));
+            
+            const homepageTitle = document.getElementById('homepage-title');
+            const homepageSubtitle = document.getElementById('homepage-subtitle');
+            const exploreBtn = document.getElementById('explore-btn');
+            
             document.getElementById('homepage-theme-checkbox').addEventListener('change', function() {
                 const isCorporate = this.checked;
-                document.getElementById('corp-background').style.opacity = isCorporate ? '1' : '0';
-                document.getElementById('acad-background').style.opacity = isCorporate ? '0' : '1';
-                homepage.style.backgroundColor = isCorporate ? '#1f2937' : '#0c3c26';
-                exploreBtn.dataset.mode = isCorporate ? 'corporate' : 'academics';
-                exploreBtn.className = exploreBtn.className.replace(/bg-[\w-]+/, isCorporate ? 'bg-blue-600' : 'bg-yellow-500').replace(/hover:bg-[\w-]+/, isCorporate ? 'hover:bg-blue-700' : 'hover:bg-yellow-600');
-                document.getElementById('homepage-subtitle').textContent = isCorporate ? 'Automation & Mechanization Specialist' : 'Agricultural Engineer | Researcher';
-                document.getElementById('mode-label-left').style.opacity = isCorporate ? '1' : '0.5';
-                document.getElementById('mode-label-right').style.opacity = isCorporate ? '0.5' : '1';
-            });
+                document.getElementById('acad-homepage-bg').style.opacity = isCorporate ? '0' : '1';
+                document.getElementById('corp-homepage-bg').style.opacity = isCorporate ? '1' : '0';
+                setCursorTheme(!isCorporate);
+                
+                // Update text and colors
+                if (isCorporate) {
+                    homepageTitle.style.color = '#eceff4';
+                    homepageSubtitle.style.color = '#d8dee9';
+                    homepageSubtitle.textContent = 'Automation & Mechanization Specialist';
+                    exploreBtn.style.backgroundColor = '#5e81ac';
+                    exploreBtn.dataset.mode = 'corporate';
+                } else {
+                    homepageTitle.style.color = '#2e3440';
+                    homepageSubtitle.style.color = '#4c566a';
+                    homepageSubtitle.textContent = 'Agricultural Engineer | Researcher';
+                    exploreBtn.style.backgroundColor = '#556b2f';
+                    exploreBtn.dataset.mode = 'academics';
+                }
 
+                document.getElementById('mode-label-left').style.opacity = isCorporate ? '0.5' : '1';
+                document.getElementById('mode-label-right').style.opacity = isCorporate ? '1' : '0.5';
+            });
 
             function updateActiveSection() {
                 const isAcademic = document.body.classList.contains('academic-theme');
@@ -317,8 +463,8 @@
                 const items = slider.querySelectorAll('.slider-item');
                 if (items.length === 0) return;
 
-                const nextBtn = slider.querySelector('.slider-next');
-                const prevBtn = slider.querySelector('.slider-prev');
+                const nextBtn = slider.parentElement.querySelector('.slider-next');
+                const prevBtn = slider.parentElement.querySelector('.slider-prev');
                 let currentIndex = 0;
                 function updateSlider() { track.style.transform = `translateX(-${currentIndex * slider.getBoundingClientRect().width}px)`; }
                 nextBtn.addEventListener('click', () => { currentIndex = (currentIndex + 1) % items.length; updateSlider(); });
@@ -345,14 +491,18 @@
             // --- Dynamic CSS for Switchers ---
             const style = document.createElement('style');
             style.innerHTML = `
-                input:checked + span { background-color: var(--acad-primary); }
-                body:not(.academic-theme) input:checked + span { background-color: var(--corp-primary) !important; }
+                input:checked + span { background-color: var(--acad-accent); } 
+                body:not(.academic-theme) input:not(:checked) + span { background-color: var(--corp-accent); } 
                 input:checked + span:before { transform: translateX(24px); }
-
-                #homepage-theme-checkbox:checked + .slider-bg { background-color: rgba(37, 99, 235, 0.5) !important; }
-                #homepage-theme-checkbox:not(:checked) + .slider-bg { background-color: rgba(212, 175, 55, 0.5) !important; }
+                #homepage-theme-checkbox:checked + .slider-bg { background-color: rgba(94, 129, 172, 0.5) !important; }
+                #homepage-theme-checkbox:not(:checked) + .slider-bg { background-color: rgba(85, 107, 47, 0.5) !important; }
             `;
             document.head.appendChild(style);
+            
+            // Set initial theme
+            document.getElementById('homepage-theme-checkbox').checked = false;
+            document.body.classList.add('academic-theme');
+            setCursorTheme(true); // Initial cursor theme
         });
     </script>
 </body>
