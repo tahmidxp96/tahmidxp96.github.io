@@ -1,0 +1,87 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #e0f2f7, #c1e4f3); /* Soft blue gradient background */
+    background-size: 200% 200%;
+    animation: gradientAnimation 10s ease infinite alternate; /* Subtle animation for liquid feel */
+    color: #334155; /* Darker text for contrast */
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+.container {
+    max-width: 1200px;
+}
+
+header h1 {
+    color: #1a202c; /* Darker primary color */
+    text-shadow: 0px 2px 4px rgba(0,0,0,0.1); /* Subtle text shadow */
+}
+
+header p {
+    color: #4a5568;
+}
+
+/* Glass card effect */
+.bg-white {
+    background-color: rgba(255, 255, 255, 0.6); /* Semi-transparent white */
+    backdrop-filter: blur(10px) saturate(180%); /* Frosted glass effect */
+    -webkit-backdrop-filter: blur(10px) saturate(180%); /* For Safari */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
+    border-radius: 16px; /* More rounded corners */
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1); /* Softer shadow */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth hover */
+}
+
+.bg-white:hover {
+    transform: translateY(-5px); /* Lift on hover */
+    box-shadow: 0 12px 48px 0 rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+/* Navigation Buttons */
+.mode-button {
+    background-color: rgba(255, 255, 255, 0.2); /* Lighter, more transparent base */
+    color: #334155; /* Darker text for inactive */
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.mode-button.active {
+    background-color: rgba(74, 144, 226, 0.8); /* Stronger blue for active */
+    color: white;
+    border-color: rgba(74, 144, 226, 0.5);
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+}
+
+.mode-button:hover:not(.active) {
+    background-color: rgba(255, 255, 255, 0.4); /* Slightly more opaque on hover */
+    color: #1a202c;
+}
+
+/* Text inside cards */
+h2 {
+    color: #1a202c;
+    font-weight: 700;
+}
+
+h3 {
+    color: #2d3748;
+    font-weight: 600;
+}
+
+p, li {
+    color: #4a5568;
+}
+
+/* Icons */
+.fa-check-circle {
+    color: #4CAF50; /* Green for check marks */
+}
+
+.fas, .fab {
+    color: #4A90E2; /* Blue for general icons */
+}
