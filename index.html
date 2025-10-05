@@ -3,349 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image to Text (OCR) with Gemini AI</title>
-    <!-- Tailwind CSS for styling -->
+    <title>Md. Tahmid Hassan Khan | Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Tesseract.js for OCR -->
-    <script src='https://unpkg.com/tesseract.js@5/dist/tesseract.min.js'></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom styles */
         body {
             font-family: 'Inter', sans-serif;
         }
-        .file-input-button {
-            cursor: pointer;
-        }
-        #image-upload {
+        .section {
             display: none;
         }
-        .spinner {
-            border-top-color: #3498db;
-            animation: spin 1s linear infinite;
+        .section.active {
+            display: block;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        /* Style for Gemini action buttons */
-        .gemini-button {
-            background-color: #1F2937; /* bg-gray-800 */
-            color: #D1D5DB; /* text-gray-300 */
-            border: 1px solid #4B5563; /* border-gray-600 */
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            transition: all 0.2s ease-in-out;
-            font-weight: 500;
-        }
-        .gemini-button:hover {
-            background-color: #374151; /* bg-gray-700 */
-            border-color: #6B7280; /* border-gray-500 */
-        }
-        .gemini-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .mode-button.active {
+            background-color: #4A90E2;
+            color: white;
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
+<body class="bg-gray-100 text-gray-800">
 
-    <div class="container mx-auto max-w-4xl w-full">
-        <div class="bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-10">
-            <header class="text-center mb-8">
-                <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Image to Text Extractor with Gemini AI</h1>
-                <p class="text-gray-400">Extract, summarize, translate, and understand text from any image.</p>
-            </header>
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Md. Tahmid Hassan Khan</h1>
+            <p class="text-xl md:text-2xl text-gray-600 mt-2">Agricultural Engineer</p>
+        </header>
 
-            <main>
-                <!-- Image Upload Section -->
-                <div class="upload-area bg-gray-900 border-2 border-dashed border-gray-600 rounded-xl p-8 text-center mb-6">
-                    <div id="image-preview-container" class="hidden mb-4">
-                        <img id="image-preview" src="#" alt="Image Preview" class="max-w-full max-h-64 mx-auto rounded-lg object-contain">
-                    </div>
-                    <div id="upload-prompt">
-                        <svg class="mx-auto h-12 w-12 text-gray-500" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        <p class="mt-2 text-gray-400">Drag & drop an image here or</p>
-                        <label for="image-upload" class="file-input-button relative font-semibold text-indigo-400 hover:text-indigo-300 transition-colors duration-200">
-                            <span>Upload a file</span>
-                        </label>
-                        <input id="image-upload" name="image-upload" type="file" class="sr-only" accept="image/*">
-                    </div>
-                </div>
+        <nav class="flex justify-center mb-8">
+            <button id="corporate-btn" class="mode-button active text-white bg-gray-800 hover:bg-gray-700 font-bold py-2 px-4 rounded-l-full">
+                Corporate
+            </button>
+            <button id="academics-btn" class="mode-button text-white bg-gray-600 hover:bg-gray-700 font-bold py-2 px-4 rounded-r-full">
+                Academics
+            </button>
+        </nav>
 
-                <!-- Action Button -->
-                <div class="text-center mb-6">
-                    <button id="ocr-button" disabled class="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-900 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105">
-                        Extract Text
-                    </button>
-                </div>
-
-                <!-- OCR Status and Result Section -->
-                <div id="status-container" class="hidden text-center mb-4 p-4 bg-gray-900 rounded-lg">
-                    <div class="flex items-center justify-center">
-                        <div class="spinner w-6 h-6 rounded-full border-4 border-gray-600"></div>
-                        <p id="status-message" class="ml-3 text-gray-300"></p>
+        <main>
+            <!-- Corporate Section -->
+            <section id="corporate" class="section active">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="md:col-span-1">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <h2 class="text-2xl font-bold mb-4">Contact</h2>
+                            <p><i class="fas fa-envelope mr-2"></i>tahmidxp96@gmail.com</p>
+                            <p><i class="fas fa-envelope mr-2"></i>md._tahmid_hassan_khan@bat.com</p>
+                            <p><i class="fas fa-phone mr-2"></i>+880 1701-019018 (Personal)</p>
+                            <p><i class="fas fa-phone mr-2"></i>+880 1894-724754 (Office)</p>
+                            <p><i class="fas fa-map-marker-alt mr-2"></i>Dighinala, Khagrachari, Chittagong.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Skills</h2>
+                            <ul>
+                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>MS Suite</li>
+                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Adobe Creative Cloud</li>
+                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Fusion 360 and Cinema 4D</li>
+                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>C, C++, R, Python</li>
+                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Machine Learning</li>
+                            </ul>
+                        </div>
+                         <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Awards</h2>
+                            <p>Secured place in the TOP THREE ideas of SAIYN Idea Competition-2023 on "Harnessing Smart Innovation for Shaping the Future Agriculture."</p>
+                        </div>
                     </div>
-                    <div id="progress-bar-container" class="w-full bg-gray-700 rounded-full h-2.5 mt-4 hidden">
-                         <div id="progress-bar" class="bg-indigo-500 h-2.5 rounded-full" style="width: 0%"></div>
-                    </div>
-                </div>
-
-                <div id="result-container" class="hidden">
-                     <div class="flex justify-between items-center mb-3">
-                        <h2 class="text-2xl font-semibold">Extracted Text:</h2>
-                        <button id="copy-button" class="bg-gray-700 hover:bg-gray-600 text-sm text-gray-300 font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard mr-2" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
-                            <span id="copy-text">Copy</span>
-                        </button>
-                    </div>
-                    <div class="bg-gray-900 p-6 rounded-lg">
-                        <pre id="ocr-result" class="whitespace-pre-wrap text-gray-300 text-sm md:text-base"></pre>
-                    </div>
-
-                    <!-- Gemini Actions Section -->
-                    <div id="gemini-actions" class="mt-6 hidden">
-                        <div class="border-t border-gray-700 pt-6">
-                             <h3 class="text-lg font-semibold text-center mb-4 text-gray-400">Powered by Gemini AI</h3>
-                             <div class="flex flex-wrap gap-4 items-center justify-center">
-                                <button id="summarize-button" class="gemini-button">✨ Summarize</button>
-                                <div class="flex items-center gap-2">
-                                    <button id="translate-button" class="gemini-button">✨ Translate to</button>
-                                    <select id="language-select" class="bg-gray-700 text-white rounded-md p-2 border border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                                        <option value="Spanish">Spanish</option>
-                                        <option value="French">French</option>
-                                        <option value="German">German</option>
-                                        <option value="Japanese">Japanese</option>
-                                        <option value="Chinese">Chinese</option>
-                                        <option value="Russian">Russian</option>
-                                        <option value="Arabic">Arabic</option>
-                                    </select>
-                                </div>
-                                <button id="explain-button" class="gemini-button">✨ Explain this</button>
+                    <div class="md:col-span-2">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <h2 class="text-2xl font-bold mb-4">About Me</h2>
+                            <p>An agricultural engineer specializing in automation and mechanization. Expert in precision farming, sensor technologies, and data-driven decision-making. Currently focused on developing IoT-based systems and innovative agricultural machinery, passionate about leveraging technology to enhance agricultural efficiency and sustainability.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Work Experience</h2>
+                            <div>
+                                <h3 class="text-xl font-semibold">Leaf Quality Officer, British American Tobacco Bangladesh</h3>
+                                <p class="text-gray-600">Aug 2024 - Present</p>
+                            </div>
+                            <div class="mt-4">
+                                <h3 class="text-xl font-semibold">Research Fellow, Bangladesh Institute of Nuclear Agriculture</h3>
+                                <p class="text-gray-600">Oct 2021 - Jul 2024</p>
+                            </div>
+                            <div class="mt-4">
+                                <h3 class="text-xl font-semibold">Part-time Marketing and Graphics Designer, GAgro LTD</h3>
+                                <p class="text-gray-600">March 2020 - Jan 2021</p>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Gemini Result Section -->
-                    <div id="gemini-result-container" class="hidden mt-8">
-                        <div id="gemini-status" class="hidden flex items-center justify-center mb-4">
-                            <div class="spinner w-6 h-6 rounded-full border-4 border-gray-600"></div>
-                            <p id="gemini-status-text" class="ml-3 text-gray-300">Generating with Gemini...</p>
+                        <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Training</h2>
+                             <ul class="list-disc list-inside">
+                                <li>Industrial Training Attachment</li>
+                                <li>Rice Transplanter & Combine Harvester- Operation, Repair & Maintenance</li>
+                                <li>Extension Field Trip Attachment</li>
+                                <li>Global Postharvest Loss Prevention: Fundamentals, Technologies, and Actors</li>
+                                <li>National Youth Assembly -NYA</li>
+                            </ul>
                         </div>
-                        <div id="gemini-content" class="hidden">
-                            <h3 class="text-xl font-semibold mb-3">Gemini's Response:</h3>
-                            <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
-                                <pre id="gemini-result-text" class="whitespace-pre-wrap text-gray-300"></pre>
-                            </div>
+                        <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Extracurricular Activities</h2>
+                            <ul class="list-disc list-inside">
+                                <li>Additional General Secretary, Bangladesh Agricultural University Career Club</li>
+                                <li>Committee Member, Volunteer for Bangladesh</li>
+                                <li>Active Citizens, British Council</li>
+                                <li>Volunteer, Bangladesh Biology Olympiad</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-            </main>
+            </section>
 
-        </div>
+            <!-- Academics Section -->
+            <section id="academics" class="section">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="md:col-span-1">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                             <h2 class="text-2xl font-bold mb-4">Contact</h2>
+                            <p><i class="fas fa-envelope mr-2"></i>tahmid.1705084@bau.edu.bd</p>
+                            <p><i class="fas fa-envelope mr-2"></i>tahmidxp96@gmail.com</p>
+                            <p><i class="fas fa-phone mr-2"></i>+880 1894-724754</p>
+                            <a href="https://www.linkedin.com/in/tahmid-hassan-khan" class="text-blue-500 hover:underline"><i class="fab fa-linkedin mr-2"></i>LinkedIn</a>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Education</h2>
+                            <p class="font-semibold">Bachelor of Science in Agricultural Engineering</p>
+                            <p>Bangladesh Agricultural University (BAU), Mymensingh, Bangladesh.</p>
+                            <p class="text-gray-600">Jan 2017 - Aug 2024</p>
+                            <p><strong>CGPA:</strong> 2.68/4.00</p>
+                            <p><strong>Major:</strong> Farm Power and Machinery</p>
+                            <p><strong>Thesis:</strong> Design and Development of a Microcontroller-Based Automated Irrigation for Rice Field</p>
+                        </div>
+                         <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Technical Skills</h2>
+                            <ul>
+                                <li><strong>Programming:</strong> Python, C/C++, R, LaTeX</li>
+                                <li><strong>Data Analysis:</strong> Microsoft Excel, GraphPad Prism</li>
+                                <li><strong>IoT & Embedded:</strong> Arduino IDE, Blynk</li>
+                                <li><strong>Design & Simulation:</strong> Fusion 360</li>
+                                <li><strong>Designing Tools:</strong> Adobe Creative Suite, Cinema4D</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <h2 class="text-2xl font-bold mb-4">Summary</h2>
+                            <ul class="list-disc list-inside">
+                                <li>Currently working as a Leaf Quality Officer at BAT Bangladesh, applying data-driven quality control practices and working closely with agri supply chains.</li>
+                                <li>Developed and field tested an automated irrigation system using ESP and ESP-NOW to optimize water usage in rice cultivation.</li>
+                                <li>Research interests include precision agriculture, climate-smart mechanization, IoT in agriculture, and embedded systems for field applications.</li>
+                                <li>Published 2 research papers Another one WIP on real-time irrigation control using wireless sensors.</li>
+                                <li>Looking for MS/PhD opportunities to advance innovations in smart agriculture, automation, and resource-efficient agriculture.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Research and Work Experiences</h2>
+                            <div class="mb-4">
+                                <h3 class="text-xl font-semibold">Leaf Quality Officer, British American Tobacco Bangladesh LTD</h3>
+                                <p class="text-gray-600">August 2024 - Present</p>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>Collected and analyzed field and lab samples per crop cycle to assess moisture levels, leaf quality, and contamination.</li>
+                                    <li>Monitored and evaluated field performance data at various crop stages.</li>
+                                    <li>Conducted daily inspections of harvested tobacco to validate grading accuracy.</li>
+                                    <li>Organized and led training sessions for farmers, field technicians, and seasonal staff.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold">Research Fellow, Bangladesh Institute of Nuclear Agriculture</h3>
+                                <p class="text-gray-600">October 2021 - July 2024</p>
+                                <p class="font-medium mt-2">Solar-Powered Automated Irrigation System for Rice Fields</p>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>Designed and deployed an automated irrigation system using ESP8266/ESP32 microcontrollers.</li>
+                                    <li>Programmed microcontrollers using Arduino IDE (C language).</li>
+                                    <li>Integrated a solar-powered power unit and an automatic data logger.</li>
+                                    <li>Utilized Blynk IoT platform for real-time remote monitoring.</li>
+                                    <li>Installed and field-tested the system in a rice paddy.</li>
+                                </ul>
+                            </div>
+                        </div>
+                         <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+                            <h2 class="text-2xl font-bold mb-4">Publications and Conferences</h2>
+                             <ul class="list-disc list-inside">
+                               <li>Hassan, R., et al. (2020). Prediction of Epidemics Trend of COVID-19 in Bangladesh. <em>Frontiers in Public Health</em>.</li>
+                               <li>Hasan, M. A., et al. (2024). Technical evaluation of low-head drip irrigation system. <em>Global Research in Environment and Sustainability</em>.</li>
+                               <li>Khan, M. T. H., et al. (2025, February). Automated irrigation for rice fields. <em>1st International Conference on Agricultural Machinery and Bioresource Engineering (ICAMBE)</em>.</li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
 
     <script>
-        // DOM element references
-        const imageUpload = document.getElementById('image-upload');
-        const imagePreviewContainer = document.getElementById('image-preview-container');
-        const imagePreview = document.getElementById('image-preview');
-        const uploadPrompt = document.getElementById('upload-prompt');
-        const ocrButton = document.getElementById('ocr-button');
-        const statusContainer = document.getElementById('status-container');
-        const statusMessage = document.getElementById('status-message');
-        const progressBarContainer = document.getElementById('progress-bar-container');
-        const progressBar = document.getElementById('progress-bar');
-        const resultContainer = document.getElementById('result-container');
-        const ocrResult = document.getElementById('ocr-result');
-        const copyButton = document.getElementById('copy-button');
-        const copyText = document.getElementById('copy-text');
-        
-        // Gemini related DOM elements
-        const geminiActions = document.getElementById('gemini-actions');
-        const summarizeButton = document.getElementById('summarize-button');
-        const translateButton = document.getElementById('translate-button');
-        const languageSelect = document.getElementById('language-select');
-        const explainButton = document.getElementById('explain-button');
-        const geminiResultContainer = document.getElementById('gemini-result-container');
-        const geminiStatus = document.getElementById('gemini-status');
-        const geminiStatusText = document.getElementById('gemini-status-text');
-        const geminiContent = document.getElementById('gemini-content');
-        const geminiResultText = document.getElementById('gemini-result-text');
+        const corporateBtn = document.getElementById('corporate-btn');
+        const academicsBtn = document.getElementById('academics-btn');
+        const corporateSection = document.getElementById('corporate');
+        const academicsSection = document.getElementById('academics');
 
-
-        let selectedImage = null;
-
-        // Handle image selection
-        imageUpload.addEventListener('change', (event) => {
-            const files = event.target.files;
-            if (files && files[0]) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    imagePreview.src = e.target.result;
-                    selectedImage = e.target.result;
-                    imagePreviewContainer.classList.remove('hidden');
-                    uploadPrompt.classList.add('hidden');
-                    ocrButton.disabled = false;
-                    resultContainer.classList.add('hidden');
-                    geminiActions.classList.add('hidden');
-                    geminiResultContainer.classList.add('hidden');
-                };
-                reader.readAsDataURL(files[0]);
-            }
+        corporateBtn.addEventListener('click', () => {
+            corporateSection.classList.add('active');
+            academicsSection.classList.remove('active');
+            corporateBtn.classList.add('active', 'bg-gray-800');
+            corporateBtn.classList.remove('bg-gray-600');
+            academicsBtn.classList.remove('active', 'bg-gray-800');
+            academicsBtn.classList.add('bg-gray-600');
         });
 
-        // Handle OCR processing on button click
-        ocrButton.addEventListener('click', async () => {
-            if (!selectedImage) return;
-
-            ocrButton.disabled = true;
-            statusContainer.classList.remove('hidden');
-            progressBarContainer.classList.remove('hidden');
-            resultContainer.classList.add('hidden');
-            geminiActions.classList.add('hidden');
-            geminiResultContainer.classList.add('hidden');
-            statusMessage.textContent = 'Initializing OCR engine...';
-            progressBar.style.width = '0%';
-            
-            try {
-                const { data: { text } } = await Tesseract.recognize(
-                    selectedImage, 'eng', {
-                        logger: m => {
-                            if (m.status === 'recognizing text') {
-                                const progress = (m.progress * 100).toFixed(2);
-                                statusMessage.textContent = `Recognizing Text...`;
-                                progressBar.style.width = `${progress}%`;
-                            } else {
-                                statusMessage.textContent = m.status.charAt(0).toUpperCase() + m.status.slice(1) + '...';
-                            }
-                        }
-                    }
-                );
-                
-                ocrResult.textContent = text || "No text found.";
-                resultContainer.classList.remove('hidden');
-                if(text) {
-                    geminiActions.classList.remove('hidden');
-                }
-
-            } catch (error) {
-                console.error('OCR Error:', error);
-                statusMessage.textContent = 'An error occurred during OCR.';
-                ocrResult.textContent = 'Failed to extract text. Please try again.';
-                resultContainer.classList.remove('hidden');
-            } finally {
-                ocrButton.disabled = false;
-                statusContainer.classList.add('hidden');
-                progressBarContainer.classList.add('hidden');
-            }
+        academicsBtn.addEventListener('click', () => {
+            academicsSection.classList.add('active');
+            corporateSection.classList.remove('active');
+            academicsBtn.classList.add('active', 'bg-gray-800');
+            academicsBtn.classList.remove('bg-gray-600');
+            corporateBtn.classList.remove('active', 'bg-gray-800');
+            corporateBtn.classList.add('bg-gray-600');
         });
-        
-        // Handle copy to clipboard
-        copyButton.addEventListener('click', () => {
-            const textToCopy = ocrResult.textContent;
-            const tempTextArea = document.createElement('textarea');
-            tempTextArea.value = textToCopy;
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
-            try {
-                document.execCommand('copy');
-                copyText.textContent = 'Copied!';
-                setTimeout(() => { copyText.textContent = 'Copy'; }, 2000);
-            } catch (err) {
-                console.error('Failed to copy text: ', err);
-                copyText.textContent = 'Failed!';
-                 setTimeout(() => { copyText.textContent = 'Copy'; }, 2000);
-            }
-            document.body.removeChild(tempTextArea);
-        });
-
-        // --- Gemini API Integration ---
-        
-        const setGeminiButtonsDisabled = (disabled) => {
-            summarizeButton.disabled = disabled;
-            translateButton.disabled = disabled;
-            explainButton.disabled = disabled;
-        }
-
-        async function callGemini(prompt, retries = 3, delay = 1000) {
-            setGeminiButtonsDisabled(true);
-            geminiResultContainer.classList.remove('hidden');
-            geminiStatus.classList.remove('hidden');
-            geminiContent.classList.add('hidden');
-            geminiStatusText.textContent = "Generating with Gemini...";
-
-            const apiKey = ""; // Canvas will provide the key
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-            
-            const payload = { contents: [{ parts: [{ text: prompt }] }] };
-
-            for (let i = 0; i < retries; i++) {
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-
-                    const result = await response.json();
-                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
-
-                    if (text) {
-                        geminiResultText.textContent = text;
-                        geminiStatus.classList.add('hidden');
-                        geminiContent.classList.remove('hidden');
-                        setGeminiButtonsDisabled(false);
-                        return; // Success
-                    } else {
-                        throw new Error("No text found in Gemini response.");
-                    }
-                } catch (error) {
-                    console.error(`Gemini API call failed (attempt ${i + 1}):`, error);
-                    if (i === retries - 1) {
-                         geminiResultText.textContent = "Sorry, something went wrong while contacting Gemini. Please try again.";
-                         geminiStatusText.textContent = "Error!";
-                         geminiContent.classList.remove('hidden');
-                         setGeminiButtonsDisabled(false);
-                         break;
-                    }
-                    await new Promise(res => setTimeout(res, delay * Math.pow(2, i))); // Exponential backoff
-                }
-            }
-        }
-
-        summarizeButton.addEventListener('click', () => {
-            const text = ocrResult.textContent;
-            if (!text) return;
-            const prompt = `Please provide a concise summary of the following text:\n\n---\n\n${text}`;
-            callGemini(prompt);
-        });
-
-        translateButton.addEventListener('click', () => {
-            const text = ocrResult.textContent;
-            if (!text) return;
-            const language = languageSelect.value;
-            const prompt = `Translate the following text into ${language}:\n\n---\n\n${text}`;
-            callGemini(prompt);
-        });
-        
-        explainButton.addEventListener('click', () => {
-            const text = ocrResult.textContent;
-            if (!text) return;
-            const prompt = `Explain the following text in a simple and easy-to-understand way. If it's technical, break it down for a beginner:\n\n---\n\n${text}`;
-            callGemini(prompt);
-        });
-
-
     </script>
+
 </body>
 </html>
-
