@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to Text (OCR) with Gemini AI</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tesseract.js for OCR -->
+    <script src='https://unpkg.com/tesseract.js@5/dist/tesseract.min.js'></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .file-input-button {
+            cursor: pointer;
+        }
+        #image-upload {
+            display: none;
+        }
+        .spinner {
+            border-top-color: #3498db;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        /* Style for Gemini action buttons */
+        .gemini-button {
+            background-color: #1F2937; /* bg-gray-800 */
+            color: #D1D5DB; /* text-gray-300 */
+            border: 1px solid #4B5563; /* border-gray-600 */
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease-in-out;
+            font-weight: 500;
+        }
+        .gemini-button:hover {
+            background-color: #374151; /* bg-gray-700 */
+            border-color: #6B7280; /* border-gray-500 */
+        }
+        .gemini-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
+
+    <div class="container mx-auto max-w-4xl w-full">
+        <div class="bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-10">
+            <header class="text-center mb-8">
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Image to Text Extractor with Gemini AI</h1>
+                <p class="text-gray-400">Extract, summarize, translate, and understand text from any image.</p>
+            </header>
+
+            <main>
+                <!-- Image Upload Section -->
+                <div class="upload-area bg-gray-900 border-2 border-dashed border-gray-600 rounded-xl p-8 text-center mb-6">
+                    <div id="image-preview-container" class="hidden mb-4">
+                        <img id="image-preview" src="#" alt="Image Preview" class="max-w-full max-h-64 mx-auto rounded-lg object-contain">
+                    </div>
+                    <div id="upload-prompt">
+                        <svg class="mx-auto h-12 w-12 text-gray-500" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <p class="mt-2 text-gray-400">Drag & drop an image here or</p>
+                        <label for="image-upload" class="file-input-button relative font-semibold text-indigo-400 hover:text-indigo-300 transition-colors duration-200">
+                            <span>Upload a file</span>
+                        </label>
+                        <input id="image-upload" name="image-upload" type="file" class="sr-only" accept="image/*">
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <div class="text-center mb-6">
+                    <button id="ocr-button" disabled class="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-900 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105">
+                        Extract Text
+                    </button>
+                </div>
+
+                <!-- OCR Status and Result Section -->
+                <div id="status-container" class="hidden text-center mb-4 p-4 bg-gray-900 rounded-lg">
+                    <div class="flex items-center justify-center">
+                        <div class="spinner w-6 h-6 rounded-full border-4 border-gray-600"></div>
+                        <p id="status-message" class="ml-3 text-gray-300"></p>
+                    </div>
+                    <div id="progress-bar-container" class="w-full bg-gray-700 rounded-full h-2.5 mt-4 hidden">
+                         <div id="progress-bar" class="bg-indigo-500 h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div id="result-container" class="hidden">
+                     <div class="flex justify-between items-center mb-3">
+                        <h2 class="text-2xl font-semibold">Extracted Text:</h2>
+                        <button id="copy-button" class="bg-gray-700 hover:bg-gray-600 text-sm text-gray-300 font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard mr-2" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
+                            <span id="copy-text">Copy</span>
+                        </button>
+                    </div>
+                    <div class="bg-gray-900 p-6 rounded-lg">
+                        <pre id="ocr-result" class="whitespace-pre-wrap text-gray-300 text-sm md:text-base"></pre>
+                    </div>
+
+                    <!-- Gemini Actions Section -->
+                    <div id="gemini-actions" class="mt-6 hidden">
+                        <div class="border-t border-gray-700 pt-6">
+                             <h3 class="text-lg font-semibold text-center mb-4 text-gray-400">Powered by Gemini AI</h3>
+                             <div class="flex flex-wrap gap-4 items-center justify-center">
+                                <button id="summarize-button" class="gemini-button">✨ Summarize</button>
+                                <div class="flex items-center gap-2">
+                                    <button id="translate-button" class="gemini-button">✨ Translate to</button>
+                                    <select id="language-select" class="bg-gray-700 text-white rounded-md p-2 border border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                                        <option value="Spanish">Spanish</option>
+                                        <option value="French">French</option>
+                                        <option value="German">German</option>
+                                        <option value="Japanese">Japanese</option>
+                                        <option value="Chinese">Chinese</option>
+                                        <option value="Russian">Russian</option>
+                                        <option value="Arabic">Arabic</option>
+                                    </select>
+                                </div>
+                                <button id="explain-button" class="gemini-button">✨ Explain this</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gemini Result Section -->
+                    <div id="gemini-result-container" class="hidden mt-8">
+                        <div id="gemini-status" class="hidden flex items-center justify-center mb-4">
+                            <div class="spinner w-6 h-6 rounded-full border-4 border-gray-600"></div>
+                            <p id="gemini-status-text" class="ml-3 text-gray-300">Generating with Gemini...</p>
+                        </div>
+                        <div id="gemini-content" class="hidden">
+                            <h3 class="text-xl font-semibold mb-3">Gemini's Response:</h3>
+                            <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                                <pre id="gemini-result-text" class="whitespace-pre-wrap text-gray-300"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+    </div>
+
+    <script>
+        // DOM element references
+        const imageUpload = document.getElementById('image-upload');
+        const imagePreviewContainer = document.getElementById('image-preview-container');
+        const imagePreview = document.getElementById('image-preview');
+        const uploadPrompt = document.getElementById('upload-prompt');
+        const ocrButton = document.getElementById('ocr-button');
+        const statusContainer = document.getElementById('status-container');
+        const statusMessage = document.getElementById('status-message');
+        const progressBarContainer = document.getElementById('progress-bar-container');
+        const progressBar = document.getElementById('progress-bar');
+        const resultContainer = document.getElementById('result-container');
+        const ocrResult = document.getElementById('ocr-result');
+        const copyButton = document.getElementById('copy-button');
+        const copyText = document.getElementById('copy-text');
+        
+        // Gemini related DOM elements
+        const geminiActions = document.getElementById('gemini-actions');
+        const summarizeButton = document.getElementById('summarize-button');
+        const translateButton = document.getElementById('translate-button');
+        const languageSelect = document.getElementById('language-select');
+        const explainButton = document.getElementById('explain-button');
+        const geminiResultContainer = document.getElementById('gemini-result-container');
+        const geminiStatus = document.getElementById('gemini-status');
+        const geminiStatusText = document.getElementById('gemini-status-text');
+        const geminiContent = document.getElementById('gemini-content');
+        const geminiResultText = document.getElementById('gemini-result-text');
+
+
+        let selectedImage = null;
+
+        // Handle image selection
+        imageUpload.addEventListener('change', (event) => {
+            const files = event.target.files;
+            if (files && files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    selectedImage = e.target.result;
+                    imagePreviewContainer.classList.remove('hidden');
+                    uploadPrompt.classList.add('hidden');
+                    ocrButton.disabled = false;
+                    resultContainer.classList.add('hidden');
+                    geminiActions.classList.add('hidden');
+                    geminiResultContainer.classList.add('hidden');
+                };
+                reader.readAsDataURL(files[0]);
+            }
+        });
+
+        // Handle OCR processing on button click
+        ocrButton.addEventListener('click', async () => {
+            if (!selectedImage) return;
+
+            ocrButton.disabled = true;
+            statusContainer.classList.remove('hidden');
+            progressBarContainer.classList.remove('hidden');
+            resultContainer.classList.add('hidden');
+            geminiActions.classList.add('hidden');
+            geminiResultContainer.classList.add('hidden');
+            statusMessage.textContent = 'Initializing OCR engine...';
+            progressBar.style.width = '0%';
+            
+            try {
+                const { data: { text } } = await Tesseract.recognize(
+                    selectedImage, 'eng', {
+                        logger: m => {
+                            if (m.status === 'recognizing text') {
+                                const progress = (m.progress * 100).toFixed(2);
+                                statusMessage.textContent = `Recognizing Text...`;
+                                progressBar.style.width = `${progress}%`;
+                            } else {
+                                statusMessage.textContent = m.status.charAt(0).toUpperCase() + m.status.slice(1) + '...';
+                            }
+                        }
+                    }
+                );
+                
+                ocrResult.textContent = text || "No text found.";
+                resultContainer.classList.remove('hidden');
+                if(text) {
+                    geminiActions.classList.remove('hidden');
+                }
+
+            } catch (error) {
+                console.error('OCR Error:', error);
+                statusMessage.textContent = 'An error occurred during OCR.';
+                ocrResult.textContent = 'Failed to extract text. Please try again.';
+                resultContainer.classList.remove('hidden');
+            } finally {
+                ocrButton.disabled = false;
+                statusContainer.classList.add('hidden');
+                progressBarContainer.classList.add('hidden');
+            }
+        });
+        
+        // Handle copy to clipboard
+        copyButton.addEventListener('click', () => {
+            const textToCopy = ocrResult.textContent;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = textToCopy;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            try {
+                document.execCommand('copy');
+                copyText.textContent = 'Copied!';
+                setTimeout(() => { copyText.textContent = 'Copy'; }, 2000);
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                copyText.textContent = 'Failed!';
+                 setTimeout(() => { copyText.textContent = 'Copy'; }, 2000);
+            }
+            document.body.removeChild(tempTextArea);
+        });
+
+        // --- Gemini API Integration ---
+        
+        const setGeminiButtonsDisabled = (disabled) => {
+            summarizeButton.disabled = disabled;
+            translateButton.disabled = disabled;
+            explainButton.disabled = disabled;
+        }
+
+        async function callGemini(prompt, retries = 3, delay = 1000) {
+            setGeminiButtonsDisabled(true);
+            geminiResultContainer.classList.remove('hidden');
+            geminiStatus.classList.remove('hidden');
+            geminiContent.classList.add('hidden');
+            geminiStatusText.textContent = "Generating with Gemini...";
+
+            const apiKey = ""; // Canvas will provide the key
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            
+            const payload = { contents: [{ parts: [{ text: prompt }] }] };
+
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                    if (text) {
+                        geminiResultText.textContent = text;
+                        geminiStatus.classList.add('hidden');
+                        geminiContent.classList.remove('hidden');
+                        setGeminiButtonsDisabled(false);
+                        return; // Success
+                    } else {
+                        throw new Error("No text found in Gemini response.");
+                    }
+                } catch (error) {
+                    console.error(`Gemini API call failed (attempt ${i + 1}):`, error);
+                    if (i === retries - 1) {
+                         geminiResultText.textContent = "Sorry, something went wrong while contacting Gemini. Please try again.";
+                         geminiStatusText.textContent = "Error!";
+                         geminiContent.classList.remove('hidden');
+                         setGeminiButtonsDisabled(false);
+                         break;
+                    }
+                    await new Promise(res => setTimeout(res, delay * Math.pow(2, i))); // Exponential backoff
+                }
+            }
+        }
+
+        summarizeButton.addEventListener('click', () => {
+            const text = ocrResult.textContent;
+            if (!text) return;
+            const prompt = `Please provide a concise summary of the following text:\n\n---\n\n${text}`;
+            callGemini(prompt);
+        });
+
+        translateButton.addEventListener('click', () => {
+            const text = ocrResult.textContent;
+            if (!text) return;
+            const language = languageSelect.value;
+            const prompt = `Translate the following text into ${language}:\n\n---\n\n${text}`;
+            callGemini(prompt);
+        });
+        
+        explainButton.addEventListener('click', () => {
+            const text = ocrResult.textContent;
+            if (!text) return;
+            const prompt = `Explain the following text in a simple and easy-to-understand way. If it's technical, break it down for a beginner:\n\n---\n\n${text}`;
+            callGemini(prompt);
+        });
+
+
+    </script>
+</body>
+</html>
+
