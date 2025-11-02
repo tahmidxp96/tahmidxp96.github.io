@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Md. Tahmid Hassan Khan - Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
@@ -92,6 +90,13 @@
             background-color: rgba(34, 197, 94, 0.3);
             transform: scale(1.05);
         }
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 3rem;
+        }
         
         /* Scroll Animations */
         .reveal {
@@ -103,21 +108,626 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Modal Styles */
+        .modal {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            transform: scale(0.95);
+            opacity: 0;
+        }
+        .modal-active {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+        .modal-active .modal-content {
+            transform: scale(1) !important;
+            opacity: 1 !important;
+        }
+        
+        /* Custom Scrollbar for Modal */
+        .modal-content::-webkit-scrollbar {
+            width: 10px;
+        }
+        .modal-content::-webkit-scrollbar-track {
+            background: transparent; /* Make track invisible */
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background-color: #22c55e;
+            border-radius: 5px;
+            border: 3px solid transparent; /* Creates padding for a floating effect */
+            background-clip: content-box;
+        }
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background-color: #16a34a;
+        }
+        /* Firefox Scrollbar */
+        .modal-content {
+            scrollbar-width: thin;
+            scrollbar-color: #22c55e transparent;
+        }
+
     </style>
-<script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
 </head>
 <body class="antialiased">
-    <div id="root"></div>
-    <script type="module" src="./index.tsx"></script>
-<script type="module" src="/index.tsx"></script>
+
+    <div class="liquid-bg"></div>
+
+    <!-- Header / Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-20 glass-effect mx-4 mt-4 rounded-2xl overflow-hidden transition-all duration-300 ease-in-out shadow-lg">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#about" class="text-xl font-bold tracking-tighter">Tahmid H. Khan</a>
+            <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-300">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#competencies" class="nav-link">Competencies</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#publications" class="nav-link">Publications</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 flex flex-col space-y-2 text-sm">
+             <a href="#about" class="nav-link text-center py-1">About</a>
+             <a href="#competencies" class="nav-link text-center py-1">Competencies</a>
+             <a href="#experience" class="nav-link text-center py-1">Experience</a>
+             <a href="#projects" class="nav-link text-center py-1">Projects</a>
+             <a href="#publications" class="nav-link text-center py-1">Publications</a>
+             <a href="#contact" class="nav-link text-center py-1">Contact</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-24 pt-32">
+        
+        <!-- Hero Section -->
+        <section id="about" class="min-h-[80vh] flex flex-col justify-center items-center text-center reveal">
+            <h2 class="text-5xl md:text-7xl font-black mb-4 tracking-tighter">Md. Tahmid Hassan Khan</h2>
+            <p class="text-xl md:text-2xl text-green-400 font-medium mb-8">Agricultural Engineer | IoT Specialist | Sustainable Farming Advocate</p>
+            <p class="max-w-3xl text-slate-300 leading-relaxed">
+                A dedicated Agricultural Engineer focused on automation and data-driven decision-making to foster sustainable agriculture. My work involves developing IoT systems and innovative machinery to enhance resource efficiency and promote environmental stewardship. I am passionate about creating smart, sustainable solutions for real-world agricultural challenges.
+            </p>
+            <div class="mt-12 flex flex-wrap justify-center gap-4">
+                <a href="mailto:tahmidxp96@gmail.com" class="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-8 rounded-full transition-all flex items-center gap-2 text-lg">
+                    Contact Me
+                </a>
+                <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full transition-all flex items-center gap-2 text-lg">
+                    Download CV
+                </a>
+            </div>
+        </section>
+
+        <!-- Core Competencies Section -->
+        <section id="competencies" class="py-20 reveal">
+            <div class="text-center mb-12">
+                <h3 class="text-4xl font-bold tracking-tight">Core Competencies</h3>
+                <p class="text-slate-400 mt-2">Pioneering the future of agriculture through technology and sustainability.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="glass-effect p-8 rounded-3xl text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4 text-green-400"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m12 14 4-2"></path><path d="m12 14-4-2"></path><path d="m12 14-4 2"></path><path d="m12 14 4 2"></path><path d="m12 14-4-2-4 2"></path><path d="m12 14 4-2 4 2"></path></svg>
+                    <h4 class="text-2xl font-bold mb-2">Sustainable Tech</h4>
+                    <p class="text-slate-300">Developing solar-powered, water-efficient systems that minimize environmental impact and promote renewable energy in farming.</p>
+                </div>
+                <div class="glass-effect p-8 rounded-3xl text-center">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4 text-green-400"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20V16"></path></svg>
+                    <h4 class="text-2xl font-bold mb-2">Data-Driven Insights</h4>
+                    <p class="text-slate-300">Leveraging field and lab data to drive decision-making, optimize resource allocation, and improve crop quality from seed to harvest.</p>
+                </div>
+                <div class="glass-effect p-8 rounded-3xl text-center">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4 text-green-400"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+                    <h4 class="text-2xl font-bold mb-2">Automation & IoT</h4>
+                    <p class="text-slate-300">Engineering automated systems with ESP32 microcontrollers and IoT platforms for precise, remote management of agricultural operations.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="py-20 reveal">
+            <div class="section-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <h3 class="text-3xl font-bold tracking-tight">Research & Work Experience</h3>
+            </div>
+            <div class="space-y-8 max-w-4xl mx-auto">
+                <div class="glass-effect p-6 rounded-2xl">
+                    <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-2 sm:gap-0">
+                        <h4 class="font-bold text-xl text-green-300">Leaf Quality Officer</h4>
+                        <span class="text-sm text-slate-400">Aug 2024 - Present</span>
+                    </div>
+                    <p class="text-md font-medium text-slate-200 mb-4">British American Tobacco (BAT) Bangladesh</p>
+                    <ul class="space-y-3 text-slate-300">
+                        <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-1 text-green-400 flex-shrink-0"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg><span>Streamlined manual quality processes and automated key tasks to boost efficiency and accuracy.</span></li>
+                        <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-1 text-green-400 flex-shrink-0"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20V16"></path></svg><span>Analyzed field/lab samples to reduce waste and advance sustainable supply chains.</span></li>
+                        <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-1 text-green-400 flex-shrink-0"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg><span>Managed cross-functional IT projects, enhancing operational technology and data infrastructure.</span></li>
+                        <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-1 text-green-400 flex-shrink-0"><path d="M12 12v.01"></path><path d="M16.24 7.76v.01"></path><path d="M19.07 10.93v.01"></path><path d="M19.07 13.07v.01"></path><path d="M16.24 16.24v.01"></path><path d="M12 16.99v.01"></path><path d="M7.76 16.24v.01"></path><path d="M4.93 13.07v.01"></path><path d="M4.93 10.93v.01"></path><path d="M7.76 7.76v.01"></path></svg><span>Served as Acting Maintenance Lead at the Green Leaf Threshing plant, overseeing equipment uptime.</span></li>
+                        <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-1 text-green-400 flex-shrink-0"><path d="M15.5 2H8.6c-.4 0-.8.2-1.1.5-.3.3-.5.7-.5 1.1V21c0 .4.2.8.5 1.1.3.3.7.5 1.1.5h7.8c.4 0 .8-.2 1.1-.5.3-.3.5-.7.5-1.1V6.5L15.5 2z"></path><path d="M15 2v5h5"></path><path d="M10 16s-1.5-2-3-2-3 2-3 2"></path><path d="M10 12s-1.5-2-3-2-3 2-3 2"></path></svg><span>Prepared comprehensive documentation for internal audits, ensuring compliance with quality standards.</span></li>
+                    </ul>
+                </div>
+                <div class="glass-effect p-6 rounded-2xl">
+                     <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-2 sm:gap-0">
+                        <h4 class="font-bold text-xl text-green-300">Research Fellow</h4>
+                        <span class="text-sm text-slate-400">Oct 2021 - Jul 2024</span>
+                    </div>
+                    <p class="text-md font-medium text-slate-200 mb-4">Bangladesh Institute of Nuclear Agriculture</p>
+                    <ul class="space-y-3 text-slate-300">
+                        <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-1 text-green-400 flex-shrink-0"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><span>Developed a <span class="font-semibold text-white">solar-powered</span> automated irrigation system, promoting renewable energy in agriculture.</span></li>
+                        <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-1 text-green-400 flex-shrink-0"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg><span>Engineered the system for significant <span class="font-semibold text-white">water efficiency</span>, conserving a critical natural resource.</span></li>
+                        <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-1 text-green-400 flex-shrink-0"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg><span>Utilized ESP32 microcontrollers and Blynk IoT for precise, remote resource management.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 reveal">
+            <div class="section-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9L12 2l9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <h3 class="text-3xl font-bold tracking-tight">Key Projects & Thesis</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div id="thesis-project" class="glass-effect p-6 rounded-2xl flex flex-col cursor-pointer relative group">
+                    <div class="absolute top-4 right-4 h-8 w-8 bg-white/10 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-green-500 group-hover:rotate-90">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </div>
+                    <h4 class="font-bold text-xl text-green-300 mb-2">Thesis: Automated Irrigation for Sustainable Farming</h4>
+                    <p class="text-slate-300 flex-grow">
+                        Designed and field-tested a smart irrigation system using ESP32 and solar power. This project demonstrated significant water savings and reduced reliance on manual labor, proving how targeted technology can lead to more sustainable and productive agriculture.
+                    </p>
+                    <div class="mt-4 text-green-400 flex items-center gap-2 text-sm font-medium">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                        <span>Resource Efficiency</span>
+                    </div>
+                </div>
+                <div id="silage-project" class="glass-effect p-6 rounded-2xl flex flex-col cursor-pointer relative group">
+                     <div class="absolute top-4 right-4 h-8 w-8 bg-white/10 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-green-500 group-hover:rotate-90">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </div>
+                    <h4 class="font-bold text-xl text-green-300 mb-2">All-in-one Silage Machine</h4>
+                     <p class="text-slate-300 flex-grow">
+                        A prize-winning design concept for streamlining the silage production process. This innovation aims to reduce post-harvest loss and improve feed quality for livestock, contributing to a more sustainable and efficient agricultural cycle.
+                    </p>
+                    <div class="mt-4 text-green-400 flex items-center gap-2 text-sm font-medium">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13V6a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v7a7 7 0 0 1-7 7h-2zm-1-11v2a3 3 0 0 0 6 0v-2"></path></svg>
+                        <span>Circular Agriculture Innovation</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Publications Section -->
+        <section id="publications" class="py-20 reveal">
+            <div class="section-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                <h3 class="text-3xl font-bold tracking-tight">Publications & Conferences</h3>
+            </div>
+            <div class="space-y-6 max-w-4xl mx-auto">
+                <div id="publication-project" class="glass-effect p-6 rounded-xl cursor-pointer relative group">
+                    <div class="absolute top-4 right-4 h-8 w-8 bg-white/10 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-green-500 group-hover:rotate-90">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </div>
+                    <p class="font-semibold text-slate-200 pr-10">Khan, M. T. H., et al. (2025, February). <span class="text-green-400">Automated irrigation for rice fields: A sustainable solution...</span> [Conference poster]. 1st International Conference on Agricultural Machinery and Bioresource Engineering (ICAMBE).</p>
+                </div>
+                <div id="drip-publication" class="glass-effect p-6 rounded-xl cursor-pointer relative group">
+                     <div class="absolute top-4 right-4 h-8 w-8 bg-white/10 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-green-500 group-hover:rotate-90">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </div>
+                    <p class="font-semibold text-slate-200 pr-10">Hasan, M. A., et al. (2024). <span class="text-green-400">Technical evaluation of low-head drip irrigation system.</span> Global Research in Environment and Sustainability, 2(1), 19-28.</p>
+                </div>
+                 <div id="covid-publication" class="glass-effect p-6 rounded-xl cursor-pointer relative group">
+                     <div class="absolute top-4 right-4 h-8 w-8 bg-white/10 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-green-500 group-hover:rotate-90">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </div>
+                    <p class="font-semibold text-slate-200 pr-10">Hassan, R., et al. (2020). <span class="text-green-400">Prediction of Epidemics Trend of COVID-19 in Bangladesh.</span> Frontiers in Public Health, 8.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills & Education Section -->
+        <section id="skills" class="py-20 reveal">
+             <div class="section-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                <h3 class="text-3xl font-bold tracking-tight">Skills & Education</h3>
+            </div>
+            <div class="max-w-4xl mx-auto space-y-12">
+                <div>
+                    <h4 class="font-semibold text-lg text-green-300 mb-4 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>Programming & Development</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">Python</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">C/C++</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">R</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">LaTeX</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg text-green-300 mb-4 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>IoT & Embedded Platforms</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">Arduino IDE</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">Blynk</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">ESP8266/ESP32</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">ESP-NOW</span>
+                    </div>
+                </div>
+                 <div>
+                    <h4 class="font-semibold text-lg text-green-300 mb-4 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>Data & Design</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">MS Excel</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">GraphPad Prism</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">Fusion 30</span>
+                        <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">Adobe Creative Suite</span>
+                         <span class="skill-tag text-sm font-medium px-4 py-1 rounded-full">Cinema4D</span>
+                    </div>
+                </div>
+                <div class="pt-8 border-t border-gray-700">
+                    <h4 class="font-semibold text-lg text-green-300 mb-4 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21.42 10.72l-9-4.5a1 1 0 0 0-.84 0l-9 4.5a1 1 0 0 0 0 1.79l9 4.5a1 1 0 0 0 .84 0l9-4.5a1 1 0 0 0 0-1.79Z"/>
+                            <path d="M12 22V12"/>
+                        </svg>
+                        Education
+                    </h4>
+                    <div class="glass-effect p-6 rounded-2xl">
+                         <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-2 sm:gap-0">
+                            <h5 class="font-bold text-lg text-slate-100">Bachelor of Science in Agricultural Engineering</h5>
+                            <span class="text-sm text-slate-400">Jan 2017 - Aug 2024</span>
+                        </div>
+                        <p class="text-md font-medium text-slate-300 mb-4">Bangladesh Agricultural University (BAU), Mymensingh</p>
+                        <ul class="list-disc list-inside text-slate-400 text-sm">
+                            <li>Major: Farm Power and Machinery</li>
+                            <li>Thesis: Design and Development of a Microcontroller-Based Automated Irrigation for Rice Field</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Hobbies Section -->
+        <section id="hobbies" class="py-20 reveal">
+            <div class="section-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                <h3 class="text-3xl font-bold text-center tracking-tight">Hobbies & Interests</h3>
+            </div>
+            <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="glass-effect p-4 rounded-2xl text-center flex flex-col items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-3 text-green-400"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                    <h4 class="font-semibold text-slate-200">Reading Books</h4>
+                </div>
+                <div class="glass-effect p-4 rounded-2xl text-center flex flex-col items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-3 text-green-400"><path d="M16.8 3.8 19 2l-2 2.2"/><path d="M14 6.1 18 2"/><path d="M12 8.5 18 2.5"/><path d="m10 11 8-8"/><path d="m8 13.5 8-8"/><path d="M6 16.5 13 9.5"/><path d="M6.5 19.5 13 13H.5s.5 3.5 3.5 6.5 6.5 3.5 6.5 3.5Z"/></svg>
+                    <h4 class="font-semibold text-slate-200">Playing Guitar</h4>
+                </div>
+                <div class="glass-effect p-4 rounded-2xl text-center flex flex-col items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-3 text-green-400"><path d="M17.28 9.05a5.5 5.5 0 1 0-10.56 0"></path><path d="M12 14.5s4-2 4-5.5"></path><path d="M12 14.5s-4-2-4-5.5"></path><path d="M12 22v-7.5"></path><path d="M9 14.5c-3.33-1.5-4-5-4-5.5"></path><path d="M15 14.5c3.33-1.5 4-5 4-5.5"></path></svg>
+                    <h4 class="font-semibold text-slate-200">Photography</h4>
+                </div>
+                <div class="glass-effect p-4 rounded-2xl text-center flex flex-col items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-3 text-green-400"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M6 12h4"></path><path d="M14 12h4"></path></svg>
+                    <h4 class="font-semibold text-slate-200">Watching Movies</h4>
+                </div>
+                <div class="glass-effect p-4 rounded-2xl text-center flex flex-col items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-3 text-green-400"><path d="M2.5 16.1A3.6 3.6 0 0 1 2 12.5a3.6 3.6 0 0 1 .5-2.1"></path><path d="M4.2 18.9A3.6 3.6 0 0 1 4 15.3a3.6 3.6 0 0 1 .2-1.4"></path><path d="M6.3 21a3.6 3.6 0 0 1-.4-2.3 3.6 3.6 0 0 1 .4-2.3"></path><path d="M8.8 22.5a3.6 3.6 0 0 1-.4-2.7 3.6 3.6 0 0 1 .4-2.7"></path><path d="M11.7 23.2a3.6 3.6 0 0 1-.2-2.9 3.6 3.6 0 0 1 .2-2.9"></path><path d="M14.5 23.4a3.6 3.6 0 0 1 0-3.2"></path><path d="M17.3 22.5a3.6 3.6 0 0 1 .4-2.7 3.6 3.6 0 0 1-.4-2.7"></path><path d="M19.7 21a3.6 3.6 0 0 1 .4-2.3 3.6 3.6 0 0 1-.4-2.3"></path><path d="M21.8 18.9a3.6 3.6 0 0 1 .2-1.4 3.6 3.6 0 0 1-.2-1.4"></path><path d="M21.5 16.1A3.6 3.6 0 0 1 22 12.5a3.6 3.6 0 0 1-.5 2.1"></path><path d="M12 2.6c-5 0-8 5.5-8 9.9 0 4.4 3 9.9 8 9.9s8-5.5 8-9.9c0-4.4-3-9.9-8-9.9Z"></path></svg>
+                    <h4 class="font-semibold text-slate-200">Travelling</h4>
+                </div>
+                <div class="glass-effect p-4 rounded-2xl text-center flex flex-col items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-3 text-green-400"><path d="M18.5 8.5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1h13Z"/><path d="M5.5 12H4a2 2 0 0 0 0 4h2"/><path d="M18.5 12H20a2 2 0 0 1 0 4h-2"/><path d="M12 15.5V14"/><path d="M12 9.5V8"/></svg>
+                    <h4 class="font-semibold text-slate-200">Computer Gaming</h4>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Contact Section -->
+        <footer id="contact" class="py-20 text-center reveal">
+             <h3 class="text-4xl font-bold text-center mb-4 tracking-tight">Get In Touch</h3>
+             <p class="text-slate-300 mb-8 max-w-xl mx-auto">I'm currently seeking MS/PhD opportunities to advance innovations in smart, sustainable, and resource-efficient agriculture. <br/> Let's connect and build the future of farming together.</p>
+             <a href="mailto:tahmidxp96@gmail.com" class="text-2xl font-semibold text-green-400 hover:text-green-300 transition-colors inline-flex items-center gap-2">
+                tahmidxp96@gmail.com
+             </a>
+             <div class="flex justify-center space-x-6 mt-10">
+                <a href="https://www.linkedin.com/in/tahmid-hassan-khan/" target="_blank" class="text-slate-400 hover:text-green-400 transition-colors">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
+                </a>
+             </div>
+             <p class="text-xs text-slate-500 mt-16">&copy; 2025 Md. Tahmid Hassan Khan. All Rights Reserved.</p>
+        </footer>
+
+    </main>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal fixed inset-0 z-30 flex items-center justify-center p-4 bg-black bg-opacity-70 opacity-0 pointer-events-none">
+        <div class="modal-content glass-effect w-full max-w-3xl max-h-[90vh] rounded-3xl p-8 overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-green-300">Automated Irrigation System</h3>
+                <button class="close-modal-btn p-2 rounded-full hover:bg-white/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <div class="space-y-8">
+                <div>
+                    <h4 class="font-semibold text-lg mb-2 text-slate-100">Project Overview</h4>
+                    <p class="text-slate-300">This project addresses the inefficient water use in traditional rice farming by developing a low-cost, automated irrigation system. The goal is to optimize water usage, reduce manual labor, and enhance crop yields through smart technology, contributing to sustainable agriculture in Bangladesh.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                    <div>
+                        <h4 class="font-semibold text-lg mb-3 text-slate-100">System Components</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg><span><span class="font-semibold text-white">ESP32 Microcontroller:</span> The brain of the operation.</span></li>
+                            <li class="flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400"><path d="M4 14a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2"></path><path d="M8 14v-4a4 4 0 1 1 8 0v4"></path></svg><span><span class="font-semibold text-white">Ultrasonic Sensors:</span> For precise water level measurement.</span></li>
+                             <li class="flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400"><path d="M12 12v.01"></path><path d="M16.24 7.76v.01"></path><path d="M19.07 10.93v.01"></path><path d="M19.07 13.07v.01"></path><path d="M16.24 16.24v.01"></path><path d="M12 16.99v.01"></path><path d="M7.76 16.24v.01"></path><path d="M4.93 13.07v.01"></path><path d="M4.93 10.93v.01"></path><path d="M7.76 7.76v.01"></path></svg><span><span class="font-semibold text-white">Relay Module:</span> To safely control the water pump.</span></li>
+                             <li class="flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg><span><span class="font-semibold text-white">DC 12V Pump:</span> For efficient water delivery.</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-black/20 p-4 rounded-xl border border-white/10">
+                         <h4 class="font-semibold text-lg mb-2 text-slate-100">Key Results</h4>
+                         <div class="space-y-2">
+                             <p><strong class="text-green-400">96.4% Sensor Accuracy:</strong> Demonstrated highly reliable water level measurements.</p>
+                             <p><strong class="text-green-400">Automated Pump Control:</strong> System effectively maintained optimal water levels based on set thresholds.</p>
+                             <p><strong class="text-green-400">Remote Access:</strong> Real-time monitoring and data logging achieved via Blynk and IFTTT.</p>
+                         </div>
+                    </div>
+                </div>
+
+                <div class="text-center pt-6">
+                    <a href="#" class="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-8 rounded-full transition-all inline-flex items-center gap-2">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path></svg>
+                        View Full Poster
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Silage Machine Modal -->
+    <div id="silage-modal" class="modal fixed inset-0 z-30 flex items-center justify-center p-4 bg-black bg-opacity-70 opacity-0 pointer-events-none">
+        <div class="modal-content glass-effect w-full max-w-3xl max-h-[90vh] rounded-3xl p-8 overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-green-300">All-in-One Silage Machine</h3>
+                <button class="close-modal-btn p-2 rounded-full hover:bg-white/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <div class="space-y-8">
+                <div>
+                    <h4 class="font-semibold text-lg mb-2 text-slate-100">Project Background</h4>
+                    <p class="text-slate-300">Traditional silage production is labor-intensive, time-consuming, and often results in inconsistent quality. This project introduces a promising all-in-one machine that integrates chopping, mixing, compressing, and bagging into a single, efficient process, saving time and money for farmers.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-lg mb-3 text-slate-100">Process Flow</h4>
+                    <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-center">
+                        <div class="flex flex-col items-center min-w-[80px]"><span class="bg-slate-700 rounded-full px-3 py-1 text-sm">Input</span><small class="mt-1">Grain & Grass</small></div>
+                        <span class="text-green-400 font-bold">&rarr;</span>
+                        <div class="flex flex-col items-center min-w-[80px]"><span class="bg-slate-700 rounded-full px-3 py-1 text-sm">Chopping</span></div>
+                        <span class="text-green-400 font-bold">&rarr;</span>
+                        <div class="flex flex-col items-center min-w-[80px]"><span class="bg-slate-700 rounded-full px-3 py-1 text-sm">Mixing</span><small class="mt-1">with Molasses</small></div>
+                        <span class="text-green-400 font-bold">&rarr;</span>
+                        <div class="flex flex-col items-center min-w-[80px]"><span class="bg-slate-700 rounded-full px-3 py-1 text-sm">Compressing</span></div>
+                        <span class="text-green-400 font-bold">&rarr;</span>
+                        <div class="flex flex-col items-center min-w-[80px]"><span class="bg-slate-700 rounded-full px-3 py-1 text-sm">Packaging</span></div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-lg mb-3 text-slate-100">Socio-Economic Impact</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0 mt-1"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span><strong class="text-white">Improves Farmer's Revenue:</strong> Offers an efficient, convenient, and cost-effective method for producing high-quality silage.</span></li>
+                        <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0 mt-1"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg><span><strong class="text-white">Boosts Animal Well-being:</strong> Simplifies production of consistent, high-energy, nutritious silage, leading to healthier livestock.</span></li>
+                        <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0 mt-1"><path d="M2 18a1 1 0 0 0 .8 1.6l1.3.4A1 1 0 0 1 5 21L6 22a1 1 0 0 0 1.6-.8l.4-1.3A1 1 0 0 1 9 19l1-1a1 1 0 0 0-.8-1.6l-1.3-.4A1 1 0 0 1 6 15L5 14a1 1 0 0 0-1.6.8l-.4 1.3A1 1 0 0 1 2 17l-1 1a1 1 0 0 0 .8 1.6Z"></path></svg><span><strong class="text-white">Enhances Food Production:</strong> Streamlines the silage-making process to potentially increase greater food output and sustainability.</span></li>
+                    </ul>
+                </div>
+
+                <div class="text-center pt-6">
+                    <a href="#" class="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-8 rounded-full transition-all inline-flex items-center gap-2">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path></svg>
+                        View Full Poster
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- COVID-19 Modal -->
+    <div id="covid-modal" class="modal fixed inset-0 z-30 flex items-center justify-center p-4 bg-black bg-opacity-70 opacity-0 pointer-events-none">
+        <div class="modal-content glass-effect w-full max-w-3xl max-h-[90vh] rounded-3xl p-8 overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-green-300">COVID-19 Epidemic Trend Prediction</h3>
+                <button class="close-modal-btn p-2 rounded-full hover:bg-white/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <div class="space-y-8">
+                <div>
+                    <h4 class="font-semibold text-lg mb-2 text-slate-100">Research Background</h4>
+                    <p class="text-slate-300">In response to the COVID-19 pandemic, this study utilized the Susceptible-Infectious-Recovered (SIR) mathematical model to analyze the outbreak in Bangladesh. The aim was to provide a numerical demonstration to help forecast the epidemic's trajectory and inform public health decisions.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                    <div class="bg-black/20 p-4 rounded-xl border border-white/10">
+                         <h4 class="font-semibold text-lg mb-2 text-slate-100">Key Findings</h4>
+                         <div class="space-y-2">
+                             <p><strong class="text-green-400">Basic Reproduction Number (R₀):</strong> Calculated at 6.924, indicating a high infection rate where one infected individual infects almost seven others.</p>
+                             <p><strong class="text-green-400">Exponential Growth:</strong> The model confirmed that the infection rate was significantly greater than the recovery rate, leading to rapid spread.</p>
+                         </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-lg mb-3 text-slate-100">SIR Model Explained</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3"><span class="font-semibold text-white">S (Susceptible):</span> The number of individuals at risk of being infected.</li>
+                            <li class="flex items-center gap-3"><span class="font-semibold text-white">I (Infectious):</span> The number of individuals capable of spreading the disease.</li>
+                            <li class="flex items-center gap-3"><span class="font-semibold text-white">R (Recovered):</span> The number of individuals who have recovered or are deceased, and are now immune.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-lg mb-2 text-slate-100">Conclusion</h4>
+                    <p class="text-slate-300">The analysis provided crucial insights into the potential scale of the outbreak in Bangladesh. It highlighted the importance of public health interventions like social distancing and quarantine measures to reduce the infection rate (β) and increase the recovery rate (γ), thereby flattening the curve.</p>
+                </div>
+
+                <div class="text-center pt-6">
+                    <a href="https://www.frontiersin.org/articles/10.3389/fpubh.2020.559437/full" target="_blank" class="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-8 rounded-full transition-all inline-flex items-center gap-2">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path></svg>
+                        Read Full Paper
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Drip Irrigation Modal -->
+    <div id="drip-modal" class="modal fixed inset-0 z-30 flex items-center justify-center p-4 bg-black bg-opacity-70 opacity-0 pointer-events-none">
+        <div class="modal-content glass-effect w-full max-w-3xl max-h-[90vh] rounded-3xl p-8 overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-green-300">Low-Head Drip Irrigation Evaluation</h3>
+                <button class="close-modal-btn p-2 rounded-full hover:bg-white/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <div class="space-y-8">
+                <div>
+                    <h4 class="font-semibold text-lg mb-2 text-slate-100">Study Purpose</h4>
+                    <p class="text-slate-300">This research evaluated the technical effectiveness of a low-head drip irrigation system in a laboratory setting. The study focused on how varying the water supply head (from 0.91m to 1.83m) impacts water distribution uniformity along a 15.24m drip line, which is crucial for efficient water use in agriculture.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                    <div class="bg-black/20 p-4 rounded-xl border border-white/10">
+                         <h4 class="font-semibold text-lg mb-2 text-slate-100">Performance Metrics</h4>
+                         <div class="space-y-2">
+                             <p><strong class="text-green-400">Emission Uniformity (EU):</strong> Ranged from 33-42%, indicating poor and inefficient water distribution under the tested conditions.</p>
+                             <p><strong class="text-green-400">Flow Variation (FV):</strong> Ranged from 44-51%, which is considered unacceptable and highlights significant inconsistency in water flow.</p>
+                         </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-lg mb-3 text-slate-100">Experimental Setup</h4>
+                        <p class="text-slate-300">A PVC bucket served as the water source, placed on a stand of adjustable height. Water flowed through a lateral drip pipe with micro-tube emitters, and catch cans were used to measure the discharge at various points.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-lg mb-2 text-slate-100">Conclusion & Recommendation</h4>
+                    <p class="text-slate-300">The study concluded that the existing low-head system performed poorly, making it unsuitable for efficient crop irrigation beyond very small plots. It was recommended that the system be redesigned—specifically the emitter openings and micro-tube diameters—to achieve an EU above 80% for the system to be considered economical and effective for small-scale farmers.</p>
+                </div>
+
+                <div class="text-center pt-6">
+                    <a href="#" class="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-8 rounded-full transition-all inline-flex items-center gap-2">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path></svg>
+                        Read Full Paper
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetElement = document.querySelector(this.getAttribute('href'));
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+                // Close mobile menu on link click
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Scroll animation observer
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        revealElements.forEach(el => {
+            observer.observe(el);
+        });
+
+        // --- Generic Modal Logic ---
+        const openModal = (modal) => {
+            if (modal == null) return;
+            modal.classList.add('modal-active');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeModal = (modal) => {
+            if (modal == null) return;
+            modal.classList.remove('modal-active');
+            document.body.style.overflow = '';
+        };
+
+        // Irrigation Modal
+        const irrigationModal = document.getElementById('project-modal');
+        const openIrrigationModalTriggers = [
+            document.getElementById('thesis-project'),
+            document.getElementById('publication-project')
+        ];
+        openIrrigationModalTriggers.forEach(trigger => {
+            if (trigger) trigger.addEventListener('click', () => openModal(irrigationModal));
+        });
+
+        // Silage Machine Modal
+        const silageModal = document.getElementById('silage-modal');
+        const openSilageModalTrigger = document.getElementById('silage-project');
+        if (openSilageModalTrigger) {
+            openSilageModalTrigger.addEventListener('click', () => openModal(silageModal));
+        }
+        
+        // COVID-19 Modal
+        const covidModal = document.getElementById('covid-modal');
+        const openCovidModalTrigger = document.getElementById('covid-publication');
+        if (openCovidModalTrigger) {
+            openCovidModalTrigger.addEventListener('click', () => openModal(covidModal));
+        }
+
+        // Drip Irrigation Modal
+        const dripModal = document.getElementById('drip-modal');
+        const openDripModalTrigger = document.getElementById('drip-publication');
+        if(openDripModalTrigger) {
+            openDripModalTrigger.addEventListener('click', () => openModal(dripModal));
+        }
+
+
+        // Close button and background click logic for all modals
+        document.querySelectorAll('.modal').forEach(modal => {
+            const closeModalBtn = modal.querySelector('.close-modal-btn');
+            if(closeModalBtn) {
+                closeModalBtn.addEventListener('click', () => closeModal(modal));
+            }
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal(modal);
+                }
+            });
+        });
+
+    </script>
+
 </body>
 </html>
+
