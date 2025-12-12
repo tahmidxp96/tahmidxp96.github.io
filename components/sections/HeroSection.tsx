@@ -13,7 +13,7 @@ export const HeroSection: React.FC = React.memo(() => (
             <a href="mailto:tahmidxp96@gmail.com" className="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-8 rounded-full transition-all flex items-center gap-2 text-lg">
                 Contact Me
             </a>
-            <a href="#" className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full transition-all flex items-center gap-2 text-lg">
+            <a href="https://www.overleaf.com/read/kpsnryqfxdky#c27a62" target="_blank" rel="noopener noreferrer" className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full transition-all flex items-center gap-2 text-lg">
                 Download CV
             </a>
         </div>
